@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Nối Vòng Tay Lớn - Kết nối Tình nguyện viên và Tổ chức</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Public+Sans:wght@400;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#374951",
+                        "outline": "#737783",
+                        "surface-tint": "#2b5ab6",
+                        "secondary-container": "#dfe0e0",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "tertiary-fixed-dim": "#b6cad2",
+                        "surface-container": "#edeeef",
+                        "on-primary-container": "#97b4ff",
+                        "inverse-primary": "#b0c6ff",
+                        "surface-container-low": "#f3f4f5",
+                        "surface-variant": "#e1e3e4",
+                        "secondary-fixed": "#e2e2e2",
+                        "secondary": "#5d5f5f",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#c3c6d4",
+                        "background": "#f8f9fa",
+                        "surface-bright": "#f8f9fa",
+                        "on-surface": "#191c1d",
+                        "primary-fixed": "#d9e2ff",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed": "#001945",
+                        "tertiary": "#21333a",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-container": "#616363",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#454747",
+                        "on-primary-fixed-variant": "#00419c",
+                        "surface-container-high": "#e7e8e9",
+                        "inverse-on-surface": "#f0f1f2",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-surface-variant": "#434652",
+                        "primary-fixed-dim": "#b0c6ff",
+                        "on-tertiary-fixed": "#0b1e24",
+                        "tertiary-fixed": "#d2e6ef",
+                        "tertiary-container": "#384a51",
+                        "inverse-surface": "#2e3132",
+                        "primary-container": "#00429d",
+                        "on-primary": "#ffffff",
+                        "on-background": "#191c1d",
+                        "primary": "#002d70",
+                        "on-tertiary-container": "#a5b9c1",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#d9dadb",
+                        "surface": "#f8f9fa",
+                        "secondary-fixed-dim": "#c6c6c7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1400px",
+                        "unit": "8px",
+                        "margin-mobile": "16px",
+                        "section-padding": "80px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "h3": ["Public Sans"],
+                        "label-bold": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "h1": ["Public Sans"],
+                        "h2": ["Public Sans"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h3": ["24px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "label-bold": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "h1": ["40px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "h2": ["32px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+
+        .filled-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+
+        /* Scroll Animation Classes */
+        .reveal {
+            opacity: 0;
+            transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform, opacity;
+        }
+
+        .fade-up {
+            transform: translateY(40px);
+        }
+
+        .fade-down {
+            transform: translateY(-40px);
+        }
+
+        .fade-left {
+            transform: translateX(40px);
+        }
+
+        .fade-right {
+            transform: translateX(-40px);
+        }
+
+        .zoom-in {
+            transform: scale(0.95);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translate(0) scale(1);
+        }
+
+        /* Delay Utilities */
+        .delay-100 {
+            transition-delay: 100ms;
+        }
+
+        .delay-200 {
+            transition-delay: 200ms;
+        }
+
+        .delay-300 {
+            transition-delay: 300ms;
+        }
+
+        .delay-400 {
+            transition-delay: 400ms;
+        }
+
+        .delay-500 {
+            transition-delay: 500ms;
+        }
+    </style>
+</head>
+
+<body class="bg-background text-on-background font-body-md font-['Inter'] antialiased pt-20">
+    <!-- TopNavBar -->
+    <nav
+        class="fixed top-0 w-full z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md font-['Public_Sans'] antialiased border-b border-slate-100 dark:border-slate-800 shadow-sm">
+        <div class="flex justify-between items-center h-20 px-6 md:px-12 max-w-screen-2xl mx-auto">
+            <div class="text-xl font-black tracking-tight text-blue-800 dark:text-blue-100">
+                Nối Vòng Tay Lớn
+            </div>
+            <div class="hidden md:flex gap-8 items-center h-full">
+                <a class="h-full flex items-center text-blue-800 dark:text-blue-400 font-bold border-b-2 border-blue-800 dark:border-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-200 active:scale-95 transform transition-transform"
+                    href="#">Trang chủ</a>
+                <a class="h-full flex items-center text-slate-600 dark:text-slate-400 font-medium hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-200 active:scale-95 transform transition-transform"
+                    href="#su-menh">Sứ mệnh</a>
+                <a class="h-full flex items-center text-slate-600 dark:text-slate-400 font-medium hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-200 active:scale-95 transform transition-transform"
+                    href="#tinh-nang">Tính năng</a>
+                <a class="h-full flex items-center text-slate-600 dark:text-slate-400 font-medium hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-200 active:scale-95 transform transition-transform"
+                    href="#khoanh-khac">Khoảnh khắc</a>
+                <a class="h-full flex items-center text-slate-600 dark:text-slate-400 font-medium hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-200 active:scale-95 transform transition-transform"
+                    href="#lien-he">Liên hệ</a>
+            </div>
+            <div class="flex gap-4">
+                <button
+                    class="hidden md:block px-4 py-2 font-label-bold text-label-bold text-primary border-2 border-primary rounded-lg hover:bg-surface-container transition-colors">Dành
+                    cho tổ chức</button>
+                <button
+                    class="px-6 py-2 bg-primary text-on-primary font-label-bold text-label-bold rounded-lg hover:bg-primary-container transition-colors shadow-[0px_4px_20px_rgba(0,66,157,0.15)]">Tham
+                    gia ngay</button>
+            </div>
+        </div>
+    </nav>
+    <!-- Hero Section -->
+    <section class="relative bg-surface py-section-padding px-6 md:px-12 overflow-hidden">
+        <div class="max-w-container-max mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+                <div class="reveal fade-right z-10 flex flex-col gap-6">
+                    <h1 class="font-h1 text-h1 text-primary tracking-tight">Nối vòng tay lớn – Nền tảng kết nối Tình
+                        nguyện viên và Tổ chức Tình nguyện.</h1>
+                    <!-- Image for mobile/tablet -->
+                    <div
+                        class="lg:hidden relative z-10 w-full aspect-video rounded-xl overflow-hidden shadow-[0px_8px_30px_rgba(0,66,157,0.1)] border border-surface-container">
+                        <img alt="Đội ngũ tình nguyện viên Mùa hè xanh 2024" class="w-full h-full object-cover"
+                            src="./img/banner.png" />
+                    </div>
+                    <p class="font-h3 text-h3 text-on-surface-variant">Nơi nhiệt huyết gặp gỡ cơ hội – Nơi chung tay vì
+                        cộng đồng.</p>
+                    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">Nền tảng chuyên dụng nhằm hệ
+                        thống hóa dữ liệu tuyển dụng tình nguyện viên. Cung cấp bộ lọc thông minh, minh bạch, giúp tổ
+                        chức tiếp cận đúng đối tượng mục tiêu và hỗ trợ sinh viên tối ưu hóa lộ trình hoạt động ngoại
+                        khóa.</p>
+                    <div class="flex justify-center gap-4 mt-4">
+                        <button
+                            class="px-8 py-3 bg-primary text-on-primary font-label-bold text-label-bold rounded-lg hover:bg-primary-container transition-colors shadow-[0px_8px_30px_rgba(0,66,157,0.2)]">Tìm
+                            dự án ngay</button>
+                        <button
+                            class="px-8 py-3 bg-white text-primary font-label-bold text-label-bold border border-outline-variant rounded-lg hover:bg-surface-container-low transition-colors">Đăng
+                            dự án</button>
+                    </div>
+                </div>
+                <div class="reveal fade-left flex flex-col gap-6 items-center text-center">
+                    <div
+                        class="hidden lg:block relative z-10 w-full aspect-video rounded-xl overflow-hidden shadow-[0px_8px_30px_rgba(0,66,157,0.1)] border border-surface-container">
+                        <img alt="Đội ngũ tình nguyện viên Mùa hè xanh 2024" class="w-full h-full object-cover"
+                            src="./img/banner.png" />
+                    </div>
+                    <div class="flex justify-center gap-8 mt-4 pt-6 border-t border-outline-variant/30 w-full">
+                        <div class="reveal fade-up delay-200">
+                            <p class="font-h2 text-h2 text-primary">Kết nối 1000+</p>
+                            <p class="font-body-md text-body-md text-on-surface-variant">Sinh viên</p>
+                        </div>
+                        <div class="reveal fade-up delay-300">
+                            <p class="font-h2 text-h2 text-primary">50+</p>
+                            <p class="font-body-md text-body-md text-on-surface-variant">Tổ chức &amp; CLB đồng hành</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- New Section: Target Audiences -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 z-10 relative">
+                <div
+                    class="reveal fade-up bg-white p-6 rounded-xl border border-surface-container shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-10 h-10 bg-primary/10 text-primary rounded-lg flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined">school</span>
+                    </div>
+                    <h3 class="font-h3 text-[20px] leading-tight font-semibold text-primary mb-3">Dành cho Sinh viên
+                    </h3>
+                    <p class="font-body-md text-on-surface-variant">Phát triển kỹ năng mềm, tích lũy điểm rèn luyện và
+                        mở rộng mạng lưới quan hệ.</p>
+                </div>
+                <div
+                    class="reveal fade-up delay-200 bg-white p-6 rounded-xl border border-surface-container shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-10 h-10 bg-primary/10 text-primary rounded-lg flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined">business_center</span>
+                    </div>
+                    <h3 class="font-h3 text-[20px] leading-tight font-semibold text-primary mb-3">Dành cho Nhà tuyển
+                        dụng</h3>
+                    <p class="font-body-md text-on-surface-variant">Tiếp cận nguồn nhân lực nhiệt huyết, có chuyên môn
+                        ngôn ngữ tốt và quy trình tuyển dụng tinh gọn.</p>
+                </div>
+                <div
+                    class="reveal fade-up delay-400 bg-white p-6 rounded-xl border border-surface-container shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-10 h-10 bg-primary/10 text-primary rounded-lg flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined">public</span>
+                    </div>
+                    <h3 class="font-h3 text-[20px] leading-tight font-semibold text-primary mb-3">Dành cho cộng đồng
+                    </h3>
+                    <p class="font-body-md text-on-surface-variant">Lan tỏa giá trị nhân văn, đóng góp vào các hoạt động
+                        thiện nguyện vùng cao và giáo dục một cách bài bản.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Decorative background elements -->
+        <div
+            class="absolute top-0 right-0 -mr-40 -mt-40 w-[600px] h-[600px] bg-primary-container/10 rounded-full blur-[100px] pointer-events-none">
+        </div>
+        <div
+            class="absolute bottom-0 left-0 -ml-40 -mb-40 w-[400px] h-[400px] bg-inverse-primary/20 rounded-full blur-[80px] pointer-events-none">
+        </div>
+    </section>
+    <!-- Mission Section -->
+    <section class="py-section-padding px-6 md:px-12 bg-white" id="su-menh">
+        <div class="max-w-container-max mx-auto">
+            <div class="reveal fade-up text-center mb-16">
+                <h2 class="font-h2 text-h2 text-primary mb-4 uppercase tracking-wider">SỨ MỆNH: KHƠI NGUỒN NHIỆT HUYẾT –
+                    KẾT NỐI GIÁ TRỊ</h2>
+                <p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl mx-auto mb-6">Nối vòng tay lớn ra
+                    đời
+                    nhằm kết nối sinh viên với các cơ hội tình nguyện một cách hiệu quả và ý nghĩa. Trong bối cảnh sinh
+                    viên cần vừa phát triển bản thân vừa đóng góp cho xã hội, nền tảng giúp giải quyết khoảng cách giữa
+                    người muốn cống hiến và các tổ chức đang cần hỗ trợ.</p>
+                <p class="font-h3 text-h3 text-primary">Chúng tôi hướng đến:</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+                <div
+                    class="reveal fade-up bg-surface p-8 rounded-xl border border-surface-container hover:shadow-[0px_8px_30px_rgba(0,66,157,0.1)] transition-shadow">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div
+                            class="w-12 h-12 bg-primary-container text-on-primary-container rounded-lg flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined text-[28px]">visibility</span>
+                        </div>
+                        <h3 class="font-h3 text-[20px] leading-tight font-semibold text-on-surface">Cung cấp thông tin
+                            tình nguyện minh bạch, tập trung</h3>
+                    </div>
+                    <p class="font-body-md text-body-md text-on-surface-variant">Mọi dự án, tổ chức đều được xác thực rõ
+                        ràng. Cung cấp đầy đủ thông tin về quyền lợi, nghĩa vụ và tác động thực tế của từng chiến dịch.
+                    </p>
+                </div>
+                <div
+                    class="reveal fade-up delay-200 bg-surface p-8 rounded-xl border border-surface-container hover:shadow-[0px_8px_30px_rgba(0,66,157,0.1)] transition-shadow">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div
+                            class="w-12 h-12 bg-primary-container text-on-primary-container rounded-lg flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined text-[28px]">person_search</span>
+                        </div>
+                        <h3 class="font-h3 text-[20px] leading-tight font-semibold text-on-surface">Cá nhân hóa cơ hội
+                            phù hợp với kỹ năng và đam mê</h3>
+                    </div>
+                    <p class="font-body-md text-body-md text-on-surface-variant">Hệ thống thông minh kết nối bạn với
+                        những dự án phù hợp nhất dựa trên kỹ năng, sở thích, định hướng phát triển và thời gian rảnh
+                        rỗi.</p>
+                </div>
+                <div
+                    class="reveal fade-up delay-400 bg-surface p-8 rounded-xl border border-surface-container hover:shadow-[0px_8px_30px_rgba(0,66,157,0.1)] transition-shadow">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div
+                            class="w-12 h-12 bg-primary-container text-on-primary-container rounded-lg flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined text-[28px]">eco</span>
+                        </div>
+                        <h3 class="font-h3 text-[20px] leading-tight font-semibold text-on-surface">Xây dựng cộng đồng
+                            thiện nguyện bền vững</h3>
+                    </div>
+                    <p class="font-body-md text-body-md text-on-surface-variant">Xây dựng mạng lưới tình nguyện viên và
+                        tổ chức gắn kết lâu dài, lưu giữ những giá trị tốt đẹp và lan tỏa cảm hứng cống hiến cho thế hệ
+                        trẻ.</p>
+                </div>
+            </div>
+            <div class="mt-12 text-center">
+                <p class="font-body-lg text-body-lg text-on-surface-variant max-w-4xl mx-auto italic">Với niềm tin rằng
+                    tình nguyện là sự trao đổi giá trị và công nghệ có thể kết nối con người, Nối vòng tay lớn mong muốn
+                    lan tỏa những hành động nhỏ tạo nên thay đổi lớn, góp phần xây dựng hình ảnh sinh viên Việt Nam năng
+                    động, trách nhiệm và giàu lòng nhân ái.</p>
+            </div>
+        </div>
+    </section>
+    <!-- Features Bento Grid -->
+    <section class="py-section-padding px-6 md:px-12 bg-surface" id="tinh-nang">
+        <div class="max-w-container-max mx-auto">
+            <div class="reveal fade-up text-center mb-12">
+                <h2 class="font-h2 text-h2 text-primary mb-2">Tính năng nổi bật</h2>
+                <p class="font-h3 text-[20px] leading-tight font-semibold text-on-surface mb-4">Kết nối dễ dàng – Lan
+                    tỏa giá trị, nhân rộng yêu thương</p>
+                <p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl mx-auto">Khám phá bộ công cụ tối
+                    ưu giúp hành trình làm tình nguyện của bạn trở nên trọn vẹn, mượt mà và ý nghĩa hơn bao giờ hết.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:auto-rows-[200px]">
+                <!-- Feature 1 (Large) -->
+                <div
+                    class="reveal zoom-in md:col-span-1 row-span-2 bg-white rounded-xl p-8 border border-surface-container shadow-[0px_4px_20px_rgba(0,0,0,0.05)] flex flex-col justify-between overflow-hidden relative group">
+                    <div class="z-10">
+                        <div
+                            class="w-12 h-12 bg-primary/10 text-primary rounded-full flex items-center justify-center mb-4">
+                            <span class="material-symbols-outlined">auto_awesome</span>
+                        </div>
+                        <h3 class="font-h3 text-h3 text-on-surface mb-2">Gợi ý cá nhân hóa</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant max-w-sm">Hệ thống tự động phân tích
+                            kỹ năng và sở thích để đề xuất những chiến dịch tình nguyện sinh ra là dành riêng cho bạn.
+                        </p>
+                    </div>
+                    <div
+                        class="absolute -bottom-10 -right-10 w-64 h-64 bg-primary-container/5 rounded-full group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                </div>
+                <!-- Feature 2 -->
+                <div
+                    class="reveal fade-right bg-white rounded-xl p-6 border border-surface-container shadow-[0px_4px_20px_rgba(0,0,0,0.05)] flex flex-col">
+                    <div
+                        class="w-10 h-10 bg-primary/10 text-primary rounded-full flex items-center justify-center mb-3">
+                        <span class="material-symbols-outlined">filter_alt</span>
+                    </div>
+                    <h3 class="font-h3 text-[20px] leading-tight font-semibold text-on-surface mb-2">Lọc dự án thông
+                        minh</h3>
+                    <p class="font-body-md text-sm text-on-surface-variant">Dễ dàng tìm kiếm các hoạt động theo lĩnh vực
+                        (Môi trường, Giáo dục...), địa điểm hoặc hình thức online/offline chỉ với vài thao tác.</p>
+                </div>
+                <!-- Feature 3 -->
+                <div
+                    class="reveal fade-left bg-white rounded-xl p-6 border border-surface-container shadow-[0px_4px_20px_rgba(0,0,0,0.05)] flex flex-col">
+                    <div
+                        class="w-10 h-10 bg-primary/10 text-primary rounded-full flex items-center justify-center mb-3">
+                        <span class="material-symbols-outlined">touch_app</span>
+                    </div>
+                    <h3 class="font-h3 text-[20px] leading-tight font-semibold text-on-surface mb-2">Ứng tuyển một chạm
+                    </h3>
+                    <p class="font-body-md text-sm text-on-surface-variant">Tiết kiệm thời gian tối đa. Chỉ cần hoàn
+                        thiện hồ sơ một lần, bạn có thể nộp đơn tham gia bất kỳ dự án nào chỉ bằng một cú click.</p>
+                </div>
+                <!-- Feature 4 -->
+                <div
+                    class="reveal fade-up md:col-span-2 bg-white rounded-xl p-6 border border-surface-container shadow-[0px_4px_20px_rgba(0,0,0,0.05)] flex flex-col justify-center">
+                    <div
+                        class="w-10 h-10 bg-primary/10 text-primary rounded-full flex items-center justify-center mb-3">
+                        <span class="material-symbols-outlined">workspace_premium</span>
+                    </div>
+                    <h3 class="font-h3 text-[20px] leading-tight font-semibold text-on-surface mb-2">Chứng nhận điện tử
+                        (E-Certificate)</h3>
+                    <p class="font-body-md text-sm text-on-surface-variant">Tự động nhận, lưu trữ và tải xuống giấy
+                        chứng nhận điện tử sau khi hoàn thành dự án. Dễ dàng đính kèm vào CV hoặc chia sẻ lên mạng xã
+                        hội.</p>
+                </div>
+                <!-- Feature 5 -->
+                <div
+                    class="reveal zoom-in md:col-span-3 bg-primary text-on-primary rounded-xl p-8 shadow-[0px_4px_20px_rgba(0,66,157,0.2)] grid md:grid-cols-2 gap-8 items-center overflow-hidden relative">
+                    <div class="z-10">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="material-symbols-outlined text-white">rate_review</span>
+                            <h3 class="font-h3 text-[20px] leading-tight font-semibold text-white">Đánh giá khách quan
+                            </h3>
+                        </div>
+                        <p class="font-body-md text-white/80">Đọc và viết nhận xét về các tổ chức, dự án sau khi tham
+                            gia để tạo dựng một cộng đồng minh bạch, chân thực.</p>
+                    </div>
+                    <div class="z-10 border-t md:border-t-0 md:border-l border-white/20 pt-8 md:pt-0 md:pl-8">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="material-symbols-outlined text-white">forum</span>
+                            <h3 class="font-h3 text-[20px] leading-tight font-semibold text-white">Kết nối cộng đồng
+                            </h3>
+                        </div>
+                        <p class="font-body-md text-white/80">Trực tiếp nhắn tin hỏi đáp với ban tổ chức, chia sẻ câu
+                            chuyện truyền cảm hứng và làm quen với những người bạn cùng chung chí hướng.</p>
+                    </div>
+                    <div
+                        class="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-white/5 to-transparent pointer-events-none">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Community Voice -->
+    <section class="py-section-padding px-6 md:px-12 bg-white">
+        <div class="max-w-container-max mx-auto">
+            <div class="reveal fade-up text-center mb-12">
+                <h2 class="font-h2 text-h2 text-primary mb-2">Tiếng nói từ cộng đồng</h2>
+                <p class="font-h3 text-[20px] leading-tight font-semibold text-on-surface mb-2">Nhận xét từ người dùng
+                </p>
+                <p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl mx-auto">Những chia sẻ từ các tổ
+                    chức và tình nguyện viên sau khi sử dụng nền tảng của chúng tôi:</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+                <!-- Review 1 -->
+                <div class="reveal fade-up bg-surface p-6 rounded-xl border border-surface-container">
+                    <div class="flex text-yellow-400 mb-4">
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                    </div>
+                    <p class="font-body-md text-body-md text-on-surface mb-6 italic">“Nhờ nền tảng này, chúng tôi đã
+                        tiếp cận được nhiều bạn tình nguyện viên phù hợp hơn trong thời gian ngắn. Quy trình đăng ký rõ
+                        ràng, dễ sử dụng và giúp CLB tiết kiệm rất nhiều thời gian trong việc tuyển chọn.”</p>
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold">
+                            C</div>
+                        <div>
+                            <p class="font-label-bold text-label-bold text-on-surface">Tổ chức - CLB Sức Trẻ</p>
+                            <p class="font-label-sm text-label-sm text-on-surface-variant">5 sao</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 2 -->
+                <div class="reveal fade-up delay-100 bg-surface p-6 rounded-xl border border-surface-container">
+                    <div class="flex text-yellow-400 mb-4">
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                    </div>
+                    <p class="font-body-md text-body-md text-on-surface mb-6 italic">“Trước đây mình rất khó khăn trong
+                        việc tìm các hoạt động tình nguyện phù hợp với bản thân nhưng từ khi sử dụng nền tảng, mình đã
+                        có thể dễ dàng lựa chọn chương trình theo sở thích và thời gian cá nhân.”</p>
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 bg-tertiary/10 rounded-full flex items-center justify-center text-tertiary font-bold">
+                            MN</div>
+                        <div>
+                            <p class="font-label-bold text-label-bold text-on-surface">Tình nguyện viên - Minh Ngọc</p>
+                            <p class="font-label-sm text-label-sm text-on-surface-variant">5 sao</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 3 -->
+                <div class="reveal fade-up delay-200 bg-surface p-6 rounded-xl border border-surface-container">
+                    <div class="flex text-yellow-400 mb-4">
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                    </div>
+                    <p class="font-body-md text-body-md text-on-surface mb-6 italic">“Nền tảng giúp chúng tôi kết nối
+                        hiệu quả với các bạn tình nguyện trẻ, từ đó giúp cho việc lan tỏa các hoạt động ý nghĩa của tổ
+                        chức nhanh chóng và rộng rãi hơn.”</p>
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold">
+                            GL</div>
+                        <div>
+                            <p class="font-label-bold text-label-bold text-on-surface">Tổ chức - Tổ chức Green Life</p>
+                            <p class="font-label-sm text-label-sm text-on-surface-variant">5 sao</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 4 -->
+                <div class="reveal fade-up delay-300 bg-surface p-6 rounded-xl border border-surface-container">
+                    <div class="flex text-yellow-400 mb-4">
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                    </div>
+                    <p class="font-body-md text-body-md text-on-surface mb-6 italic">“Nền tảng cung cấp thông tin rất rõ
+                        ràng và minh bạch, giúp mình yên tâm khi đăng ký tham gia. Mình cũng học hỏi được nhiều kỹ năng
+                        mới sau mỗi hoạt động.”</p>
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 bg-tertiary/10 rounded-full flex items-center justify-center text-tertiary font-bold">
+                            HL</div>
+                        <div>
+                            <p class="font-label-bold text-label-bold text-on-surface">Tình nguyện viên - Hoàng Long</p>
+                            <p class="font-label-sm text-label-sm text-on-surface-variant">5 sao</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 5 -->
+                <div class="reveal fade-up delay-400 bg-surface p-6 rounded-xl border border-surface-container">
+                    <div class="flex text-yellow-400 mb-4">
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
+                    </div>
+                    <p class="font-body-md text-body-md text-on-surface mb-6 italic">“Mình thấy nền tảng rất ý nghĩa khi
+                        kết nối cộng đồng và các cá nhân có chung mong muốn tham gia những hoạt động có ích đến cộng
+                        đồng. Đối với mình, nền tảng không chỉ là nơi tìm kiếm cơ hội mà còn là nơi lan tỏa những giá
+                        trị tích cực.”</p>
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 bg-tertiary/10 rounded-full flex items-center justify-center text-tertiary font-bold">
+                            TH</div>
+                        <div>
+                            <p class="font-label-bold text-label-bold text-on-surface">Tình nguyện viên - Thu Hà</p>
+                            <p class="font-label-sm text-label-sm text-on-surface-variant">5 sao</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <style>
+                .hide-scrollbar::-webkit-scrollbar {
+                    display: none;
+                }
+
+                .hide-scrollbar {
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                }
+            </style>
+        </div>
+    </section>
+    <!-- Moments Section -->
+    <section class="py-section-padding px-6 md:px-12 bg-surface relative overflow-hidden" id="khoanh-khac">
+        <!-- Decorative blobs -->
+        <div
+            class="absolute top-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2">
+        </div>
+        <div
+            class="absolute bottom-0 right-0 w-96 h-96 bg-tertiary/5 rounded-full blur-[100px] translate-x-1/2 translate-y-1/2">
+        </div>
+
+        <div class="max-w-container-max mx-auto relative z-10">
+            <div class="reveal fade-up text-center mb-20 max-w-4xl mx-auto">
+                <h2 class="font-h2 text-h2 text-primary mb-8 leading-tight">Chia sẻ khoảnh khắc</h2>
+                <p class="font-body-lg text-body-lg text-on-surface-variant mb-6 leading-relaxed">Chỉ trong một khoảng
+                    thời gian ngắn triển khai, Nối vòng tay lớn đã ghi nhận hơn <span class="text-primary font-bold">50+
+                        lượt chia sẻ</span> khoảnh khắc từ các sinh viên và tổ chức tham gia. Mỗi câu chuyện là một trải
+                    nghiệm riêng, nhưng đều có điểm chung: đó là những dấu ấn của sự kết nối, trưởng thành và lan tỏa
+                    giá trị.</p>
+                <p class="font-body-md text-body-md text-on-surface-variant italic opacity-70">Có những khoảnh khắc bắt
+                    đầu từ những điều rất giản đơn – một lần đăng ký tham gia hoạt động, một buổi gặp gỡ đầu tiên, hay
+                    chỉ là một lời chào giữa những người chưa từng quen biết. Tuy nhiên, chính từ những điều nhỏ bé ấy,
+                    những hành trình ý nghĩa đã được mở ra.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
+                <!-- Moment Card 1 -->
+                <div
+                    class="reveal fade-up group bg-white rounded-[32px] overflow-hidden shadow-[0px_20px_50px_rgba(0,0,0,0.04)] hover:shadow-[0px_30px_70px_rgba(0,66,157,0.15)] transition-all duration-500 border border-surface-container flex flex-col hover:-translate-y-2">
+                    <div class="relative">
+                        <div class="w-full aspect-[16/11] relative overflow-hidden rounded-[32px] isolate">
+                            <img alt="Khoảnh khắc tình nguyện mùa hè xanh"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                                src="./img/111.jpg" />
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/100 via-black/50 to-transparent opacity-80">
+                            </div>
+                        </div>
+                        <div class="absolute bottom-0 translate-y-1/2 left-6 right-6 z-10">
+                            <div class="backdrop-blur-md bg-black/40 border border-white/20 p-5 rounded-2xl">
+                                <span
+                                    class="text-white/70 font-label-bold tracking-widest uppercase text-[11px] mb-2 block">20/04/2026
+                                    - Chiến dịch Mùa hè xanh</span>
+                                <h3 class="font-h3 text-white text-[20px] leading-tight font-bold">KHOẢNH KHẮC TÌNH
+                                    NGUYỆN SỐ 1</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8 pt-12 flex-grow">
+                        <div class="relative">
+                            <span
+                                class="material-symbols-outlined text-primary/20 text-5xl absolute -top-4 -left-6 opacity-50">format_quote</span>
+                            <p class="font-body-md text-on-surface-variant leading-relaxed italic relative z-10 pl-2">
+                                Những ngày nắng ở vùng xa<br>Buổi trưa nắng khá gắt, ai cũng mệt một chút. Nhưng đến
+                                chiều, khi công việc xong dần, mọi người lại ngồi với nhau lâu hơn bình thường. Không có
+                                gì đặc biệt, chỉ là cảm giác mình đã cùng nhau làm được một điều gì đó.</p>
+                        </div>
+                        <div class="mt-8 pt-6 border-t border-surface-container">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary font-bold text-base border border-primary/20">
+                                    MH</div>
+                                <div>
+                                    <p class="font-label-bold text-on-surface text-sm">Mai Hương</p>
+                                    <p class="font-label-sm text-on-surface-variant text-xs">Tình nguyện viên</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Moment Card 2 -->
+                <div
+                    class="reveal fade-up delay-200 group bg-white rounded-[32px] overflow-hidden shadow-[0px_20px_50px_rgba(0,0,0,0.04)] hover:shadow-[0px_30px_70px_rgba(0,66,157,0.15)] transition-all duration-500 border border-surface-container flex flex-col hover:-translate-y-2">
+                    <div class="relative">
+                        <div class="w-full aspect-[16/11] relative overflow-hidden rounded-[32px] isolate">
+                            <img alt="Khoảnh khắc thắp sáng đường quê"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                                src="./img/111.jpg" />
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/100 via-black/50 to-transparent opacity-80">
+                            </div>
+                        </div>
+                        <div class="absolute bottom-0 translate-y-1/2 left-6 right-6 z-10">
+                            <div class="backdrop-blur-md bg-black/40 border border-white/20 p-5 rounded-2xl">
+                                <span
+                                    class="text-white/70 font-label-bold tracking-widest uppercase text-[11px] mb-2 block">18/05/2026
+                                    - Chương trình thắp sáng đường quê</span>
+                                <h3 class="font-h3 text-white text-[20px] leading-tight font-bold">KHOẢNH KHẮC TÌNH
+                                    NGUYỆN SỐ 2</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8 pt-12 flex-grow">
+                        <div class="relative">
+                            <span
+                                class="material-symbols-outlined text-primary/20 text-5xl absolute -top-4 -left-6 opacity-50">format_quote</span>
+                            <p class="font-body-md text-on-surface-variant leading-relaxed italic relative z-10 pl-2">
+                                Chúng mình miệt mài làm việc cho đến khi bóng chiều đổ xuống. Khi ánh đèn đường bừng
+                                sáng, không gian chỉ kịp ửng lên một chút, không rực rỡ nhưng vừa đủ để soi rõ lối đi.
+                                Mọi người đồng loạt dừng tay, lặng yên ngắm nhìn trong chốc lát rồi lại tiếp tục thu
+                                dọn. Chính vào khoảnh khắc ấy, giữa ánh sáng khiêm nhường đó, mình mới thực sự nhìn thấu
+                                được ý nghĩa của những gì chúng mình vừa cùng nhau hoàn thiện</p>
+                        </div>
+                        <div class="mt-8 pt-6 border-t border-surface-container">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary font-bold text-base border border-primary/20">
+                                    KH</div>
+                                <div>
+                                    <p class="font-label-bold text-on-surface text-sm">Khánh Huy</p>
+                                    <p class="font-label-sm text-on-surface-variant text-xs">Tình nguyện viên</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Moment Card 3 -->
+                <div
+                    class="reveal fade-up delay-400 group bg-white rounded-[32px] overflow-hidden shadow-[0px_20px_50px_rgba(0,0,0,0.04)] hover:shadow-[0px_30px_70px_rgba(0,66,157,0.15)] transition-all duration-500 border border-surface-container flex flex-col hover:-translate-y-2">
+                    <div class="relative">
+                        <div class="w-full aspect-[16/11] relative overflow-hidden rounded-[32px] isolate">
+                            <img alt="Khoảnh khắc chương trình mùa đông ấm"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                                src="./img/222.jpg" />
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/100 via-black/50 to-transparent opacity-80">
+                            </div>
+                        </div>
+                        <div class="absolute bottom-0 translate-y-1/2 left-6 right-6 z-10">
+                            <div class="backdrop-blur-md bg-black/40 border border-white/20 p-5 rounded-2xl">
+                                <span
+                                    class="text-white/70 font-label-bold tracking-widest uppercase text-[11px] mb-2 block">12/06/2026
+                                    - Chương trình Mùa đông ấm</span>
+                                <h3 class="font-h3 text-white text-[20px] leading-tight font-bold">KHOẢNH KHẮC TÌNH
+                                    NGUYỆN SỐ 3</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8 pt-12 flex-grow">
+                        <div class="relative">
+                            <span
+                                class="material-symbols-outlined text-primary/20 text-5xl absolute -top-4 -left-6 opacity-50">format_quote</span>
+                            <p class="font-body-md text-on-surface-variant leading-relaxed italic relative z-10 pl-2">
+                                Sáng ấy trời lạnh buốt, lạnh hơn mọi dự tính của tụi mình. Giữa những tất bật và im lặng
+                                vì ai cũng bận tay, mọi lời nói dường như đều nhường chỗ cho những món đồ được trao đi.
+                                Mình chẳng còn nhớ rõ những vụn vặt của ngày hôm đó, chỉ nhớ mãi nụ cười rạng rỡ của một
+                                bạn nhỏ khi nhận quà. Nụ cười ấy cứ lấp lánh mãi, sưởi ấm cả một buổi sáng mùa đông</p>
+                        </div>
+                        <div class="mt-8 pt-6 border-t border-surface-container">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary font-bold text-base border border-primary/20">
+                                    TL</div>
+                                <div>
+                                    <p class="font-label-bold text-on-surface text-sm">Trần Linh</p>
+                                    <p class="font-label-sm text-on-surface-variant text-xs">Tình nguyện viên</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer with CTA -->
+    <footer
+        class="bg-slate-50 dark:bg-slate-950 font-['Public_Sans'] text-sm leading-relaxed text-blue-800 dark:text-blue-400 border-t border-slate-200 dark:border-slate-800"
+        id="lien-he">
+        <div class="reveal zoom-in bg-primary py-16 px-6 relative overflow-hidden">
+            <div class="max-w-container-max mx-auto text-center relative z-10">
+                <h2 class="reveal fade-up font-h1 text-[36px] md:text-h1 text-white mb-4 tracking-tight">Từng bước chân
+                    – Bắt đầu hôm
+                    nay, thay đổi ngày mai</h2>
+                <p class="reveal fade-up delay-200 font-body-lg text-body-lg text-white/80 max-w-3xl mx-auto mb-8">Chỉ
+                    cần một bước nhỏ, bạn đã có thể bắt đầu hành trình tình nguyện của chính mình. Nối vòng tay lớn sẽ
+                    giúp bạn khám phá cơ hội phù hợp, kết nối đáng tin cậy để bạn bắt đầu hành trình tình nguyện của
+                    riêng bạn. Chúng tôi cam kết mang đến một nền tảng minh bạch, dễ tiếp cận và hoàn toàn miễn phí. Chỉ
+                    cần bạn bắt đầu, mọi bước đi đều có ý nghĩa.</p>
+                <div class="reveal fade-up delay-400 flex flex-col sm:flex-row gap-4 justify-center">
+                    <button
+                        class="px-8 py-4 bg-white text-primary font-label-bold text-label-bold rounded-lg hover:bg-surface-container-low transition-colors shadow-lg">Đăng
+                        ký tình nguyện viên</button>
+                    <button
+                        class="px-8 py-4 bg-transparent text-white font-label-bold text-label-bold border border-white/30 rounded-lg hover:bg-white/10 transition-colors">Tạo
+                        tài khoản tổ chức</button>
+                </div>
+            </div>
+            <!-- Decorative circle -->
+            <div
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-white/5 rounded-full blur-[40px] pointer-events-none">
+            </div>
+        </div>
+        <!-- Footer Content -->
+        <div class="w-full py-16 px-6 md:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:flex lg:justify-between gap-8 max-w-screen-2xl mx-auto">
+                <div class="flex flex-col gap-4">
+                    <div class="text-lg font-bold text-blue-800 dark:text-blue-200">
+                        Nối Vòng Tay Lớn
+                    </div>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-xs">Nền tảng kết nối Tình nguyện viên và Tổ chức
+                        Tình nguyện hàng đầu Việt Nam.</p>
+                </div>
+                <div class="flex flex-col md:flex-row gap-8 lg:gap-16">
+                    <div class="flex flex-col gap-3">
+                        <a class="text-slate-500 dark:text-slate-400 font-semibold hover:text-blue-700 dark:hover:text-blue-300 underline-offset-4 focus:ring-2 focus:ring-blue-500 outline-none transition-colors"
+                            href="#">Về chúng tôi</a>
+                        <a class="text-slate-500 dark:text-slate-400 font-semibold hover:text-blue-700 dark:hover:text-blue-300 underline-offset-4 focus:ring-2 focus:ring-blue-500 outline-none transition-colors"
+                            href="#">Hợp tác</a>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <a class="text-slate-500 dark:text-slate-400 font-semibold hover:text-blue-700 dark:hover:text-blue-300 underline-offset-4 focus:ring-2 focus:ring-blue-500 outline-none transition-colors"
+                            href="#">Chính sách bảo mật</a>
+                        <a class="text-slate-500 dark:text-slate-400 font-semibold hover:text-blue-700 dark:hover:text-blue-300 underline-offset-4 focus:ring-2 focus:ring-blue-500 outline-none transition-colors"
+                            href="#">Điều khoản sử dụng</a>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="max-w-screen-2xl mx-auto mt-12 pt-8 border-t border-slate-200/50 dark:border-slate-800/50 text-slate-500 dark:text-slate-400 text-sm">
+                © 2024 Nối Vòng Tay Lớn. Kết nối sức trẻ, lan tỏa yêu thương.
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Intersection Observer for Scroll Animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    // Optional: Stop observing after animation triggers
+                    // observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll('.reveal');
+            animatedElements.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+
+</html>
