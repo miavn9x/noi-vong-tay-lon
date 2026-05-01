@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Nối Vòng Tay Lớn - Kết nối Tình nguyện viên và Tổ chức</title>
+    <title>ULIS Volunteer Connect - Kết nối Tình nguyện viên và Tổ chức</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
@@ -13,64 +13,32 @@
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Public+Sans:wght@400;600;700;800;900&amp;display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Public+Sans:wght@400;600;700;800;900&amp;family=Playfair+Display:wght@700&amp;display=swap"
         rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
+    <!-- GSAP & Lenis for Professional Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     "colors": {
-                        "on-tertiary-fixed-variant": "#374951",
-                        "outline": "#737783",
-                        "surface-tint": "#2b5ab6",
-                        "secondary-container": "#dfe0e0",
-                        "on-secondary-fixed": "#1a1c1c",
-                        "tertiary-fixed-dim": "#b6cad2",
+                        "background": "#f8f9fa",
+                        "on-background": "#191c1d",
+                        "surface": "#f8f9fa",
                         "surface-container": "#edeeef",
+                        "surface-container-low": "#f3f4f5",
+                        "on-surface": "#191c1d",
+                        "on-surface-variant": "#434652",
+                        "primary": "#002d70",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#00429d",
                         "on-primary-container": "#97b4ff",
                         "inverse-primary": "#b0c6ff",
-                        "surface-container-low": "#f3f4f5",
-                        "surface-variant": "#e1e3e4",
-                        "secondary-fixed": "#e2e2e2",
-                        "secondary": "#5d5f5f",
-                        "on-tertiary": "#ffffff",
-                        "surface-container-lowest": "#ffffff",
-                        "on-error-container": "#93000a",
-                        "outline-variant": "#c3c6d4",
-                        "background": "#f8f9fa",
-                        "surface-bright": "#f8f9fa",
-                        "on-surface": "#191c1d",
-                        "primary-fixed": "#d9e2ff",
-                        "on-error": "#ffffff",
-                        "on-primary-fixed": "#001945",
                         "tertiary": "#21333a",
-                        "on-secondary": "#ffffff",
-                        "on-secondary-container": "#616363",
-                        "error": "#ba1a1a",
-                        "on-secondary-fixed-variant": "#454747",
-                        "on-primary-fixed-variant": "#00419c",
-                        "surface-container-high": "#e7e8e9",
-                        "inverse-on-surface": "#f0f1f2",
-                        "surface-container-highest": "#e1e3e4",
-                        "on-surface-variant": "#434652",
-                        "primary-fixed-dim": "#b0c6ff",
-                        "on-tertiary-fixed": "#0b1e24",
-                        "tertiary-fixed": "#d2e6ef",
-                        "tertiary-container": "#384a51",
-                        "inverse-surface": "#2e3132",
-                        "primary-container": "#00429d",
-                        "on-primary": "#ffffff",
-                        "on-background": "#191c1d",
-                        "primary": "#002d70",
-                        "on-tertiary-container": "#a5b9c1",
-                        "error-container": "#ffdad6",
-                        "surface-dim": "#d9dadb",
-                        "surface": "#f8f9fa",
-                        "secondary-fixed-dim": "#c6c6c7"
+                        "outline-variant": "#c3c6d4"
                     },
                     "borderRadius": {
                         "DEFAULT": "0.25rem",
@@ -92,7 +60,8 @@
                         "label-sm": ["Inter"],
                         "h1": ["Public Sans"],
                         "h2": ["Public Sans"],
-                        "body-md": ["Inter"]
+                        "body-md": ["Inter"],
+                        "playfair": ["'Playfair Display'", "serif"]
                     },
                     "fontSize": {
                         "h3": ["24px", { "lineHeight": "1.4", "fontWeight": "600" }],
@@ -122,113 +91,440 @@
 
         /* Scroll Animation Classes */
         .reveal {
-            opacity: 0;
-            transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
             will-change: transform, opacity;
         }
 
-        .fade-up {
-            transform: translateY(40px);
+        /* Preloader Styles */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background: #002d70;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
-        .fade-down {
-            transform: translateY(-40px);
+        .loader-logo {
+            width: 150px;
+            height: auto;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite ease-in-out;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
         }
 
-        .fade-left {
-            transform: translateX(40px);
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
         }
 
-        .fade-right {
-            transform: translateX(-40px);
+        .loader-bar-container {
+            width: 200px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
         }
 
-        .zoom-in {
-            transform: scale(0.95);
+        .loader-bar {
+            width: 0%;
+            height: 100%;
+            background: #ffffff;
+            transition: width 0.5s ease;
         }
 
-        .reveal.active {
+
+        /* Smooth Scroll Config */
+        html.lenis {
+            height: auto;
+        }
+
+        .lenis.lenis-smooth {
+            scroll-behavior: auto !important;
+        }
+
+        .lenis.lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+
+        .lenis.lenis-stopped {
+            overflow: hidden;
+        }
+
+        .lenis.lenis-scrolling iframe {
+            pointer-events: none;
+        }
+
+        /* Progress Bar */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(to right, #00429d, #b0c6ff);
+            z-index: 1000;
+        }
+
+        /* Enhanced Reveal */
+        .reveal-text {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        }
+
+        .reveal-text span {
+            display: inline-block;
+        }
+
+        /* Back to Top Button */
+        #back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: #002d70;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0, 45, 112, 0.3);
+        }
+
+        #back-to-top.visible {
             opacity: 1;
-            transform: translate(0) scale(1);
+            visibility: visible;
+            transform: translateY(0);
         }
 
-        /* Delay Utilities */
-        .delay-100 {
-            transition-delay: 100ms;
+        #back-to-top:hover {
+            background: #00429d;
+            box-shadow: 0 15px 40px rgba(0, 45, 112, 0.4);
         }
 
-        .delay-200 {
-            transition-delay: 200ms;
+        /* Animation Delay Utilities */
+        .anim-delay-neg-5 {
+            animation-delay: -5s;
         }
 
-        .delay-300 {
-            transition-delay: 300ms;
+        .anim-delay-neg-8 {
+            animation-delay: -8s;
         }
 
-        .delay-400 {
-            transition-delay: 400ms;
+        /* Organic Blobs */
+        .blob {
+            position: absolute;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            filter: blur(80px);
+            opacity: 0.25;
+            /* Increased from 0.15 */
+            z-index: 0;
+            pointer-events: none;
+            animation: blob-float 20s infinite alternate ease-in-out;
         }
 
-        .delay-500 {
-            transition-delay: 500ms;
+        @keyframes blob-float {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(50px, -30px) scale(1.1);
+            }
+        }
+
+        .soft-wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            z-index: 10;
+        }
+
+        .soft-wave svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 2px);
+            /* Slightly more than 100% */
+            height: 80px;
+            margin-bottom: -1px;
+            /* Force overlap */
+            transform: scale(1.01);
+            /* Small scale to fix sub-pixel gaps */
+        }
+
+        .soft-wave .shape-fill {
+            fill: #ffffff;
+            shape-rendering: geometricPrecision;
+        }
+
+        /* Floating Decorative Lines */
+        .bg-line {
+            position: absolute;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.2;
+            /* Increased from 0.1 */
+            stroke: #00429d;
+            /* More vibrant blue */
+            fill: none;
+            stroke-width: 2;
+            /* Thicker lines */
+            stroke-linecap: round;
+            stroke-dasharray: 2000;
+            stroke-dashoffset: 2000;
+            animation: draw-line 8s forwards ease-out;
+        }
+
+        @keyframes draw-line {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .bg-line-float {
+            animation: draw-line 8s forwards ease-out, line-float 15s infinite alternate ease-in-out;
+        }
+
+        @keyframes line-float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            100% {
+                transform: translateY(-30px) rotate(2deg);
+            }
+        }
+
+        /* Subtle Dot Pattern */
+        .bg-dots {
+            background-image: radial-gradient(#002d70 0.8px, transparent 0.8px);
+            background-size: 32px 32px;
+            opacity: 0.06;
+            /* Increased visibility */
+        }
+
+        .soft-wave-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+            z-index: 10;
+        }
+
+        .soft-wave-top svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 2px);
+            height: 60px;
+            margin-top: -1px;
+            /* Overlap with section above */
+            transform: scale(1.01);
+        }
+
+        .soft-wave-top .shape-fill {
+            fill: #ffffff;
+            /* Must match the white section above */
+            shape-rendering: geometricPrecision;
+        }
+
+        /* Shine Sweep Effect */
+        .shine-sweep {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shine-sweep::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: rotate(30deg);
+            transition: all 0.7s ease;
+            pointer-events: none;
+            opacity: 0;
+            filter: blur(30px);
+        }
+
+        .group:hover .shine-sweep::after {
+            left: 120%;
+            opacity: 1;
         }
     </style>
 </head>
 
-<body class="bg-background text-on-background font-body-md font-['Inter'] antialiased pt-20">
+<body class="bg-background text-on-background font-body-md font-['Inter'] antialiased pt-20 overflow-x-hidden">
+    <!-- Preloader -->
+    <div id="preloader">
+        <img src="./img/logo.png" alt="Loading..." class="loader-logo">
+        <div class="loader-bar-container">
+            <div class="loader-bar" id="loader-bar"></div>
+        </div>
+        <p class="text-white/50 text-[10px] uppercase tracking-[0.3em] mt-4 font-bold">ULIS Volunteer Connect</p>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress"></div>
+
+    <!-- Back to Top Button -->
+    <div id="back-to-top" title="Về đầu trang">
+        <span class="material-symbols-outlined">arrow_upward</span>
+    </div>
     <!-- TopNavBar -->
     <nav
         class="fixed top-0 w-full z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md font-['Public_Sans'] antialiased border-b border-slate-100 dark:border-slate-800 shadow-sm">
         <div class="flex justify-between items-center h-20 px-6 md:px-12 max-w-screen-2xl mx-auto">
-            <div class="text-xl font-black tracking-tight text-blue-800 dark:text-blue-100">
-                Nối Vòng Tay Lớn
+            <div class="flex items-center gap-3">
+                <img src="./img/logo.png" alt="ULIS Volunteer Connect Logo" class="h-12 w-auto">
+                <div class="text-xl font-black tracking-tight text-blue-800 dark:text-blue-100">
+                    ULIS Volunteer Connect
+                </div>
             </div>
-            <div class="hidden md:flex gap-8 items-center h-full">
-                <a class="h-full flex items-center text-blue-800 dark:text-blue-400 font-bold border-b-2 border-blue-800 dark:border-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-200 active:scale-95 transform transition-transform"
+
+            <!-- Desktop Menu -->
+            <div id="desktop-menu" class="hidden md:flex gap-8 items-center h-full">
+                <a class="nav-link h-full flex items-center text-blue-800 dark:text-blue-400 font-bold border-b-2 border-blue-800 dark:border-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-200"
                     href="#">Trang chủ</a>
-                <a class="h-full flex items-center text-slate-600 dark:text-slate-400 font-medium hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-200 active:scale-95 transform transition-transform"
+                <a class="nav-link h-full flex items-center text-slate-600 dark:text-slate-400 font-medium hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-200"
                     href="#su-menh">Sứ mệnh</a>
-                <a class="h-full flex items-center text-slate-600 dark:text-slate-400 font-medium hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-200 active:scale-95 transform transition-transform"
+                <a class="nav-link h-full flex items-center text-slate-600 dark:text-slate-400 font-medium hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-200"
                     href="#tinh-nang">Tính năng</a>
-                <a class="h-full flex items-center text-slate-600 dark:text-slate-400 font-medium hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-200 active:scale-95 transform transition-transform"
+                <a class="nav-link h-full flex items-center text-slate-600 dark:text-slate-400 font-medium hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-200"
                     href="#khoanh-khac">Khoảnh khắc</a>
-                <a class="h-full flex items-center text-slate-600 dark:text-slate-400 font-medium hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-200 active:scale-95 transform transition-transform"
+                <a class="nav-link h-full flex items-center text-slate-600 dark:text-slate-400 font-medium hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-200"
                     href="#lien-he">Liên hệ</a>
             </div>
-            <div class="flex gap-4">
-                <button
-                    class="hidden md:block px-4 py-2 font-label-bold text-label-bold text-primary border-2 border-primary rounded-lg hover:bg-surface-container transition-colors">Dành
-                    cho tổ chức</button>
-                <button
-                    class="px-6 py-2 bg-primary text-on-primary font-label-bold text-label-bold rounded-lg hover:bg-primary-container transition-colors shadow-[0px_4px_20px_rgba(0,66,157,0.15)]">Tham
-                    gia ngay</button>
+
+            <!-- Action Buttons & Hamburger -->
+            <div class="flex items-center gap-4">
+                <div class="hidden lg:flex gap-4">
+                    <button
+                        onclick="document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
+                        class="px-4 py-2 font-label-bold text-label-bold text-primary border-2 border-primary rounded-lg hover:bg-surface-container transition-colors">Dành
+                        cho tổ chức</button>
+                    <button
+                        onclick="document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
+                        class="px-6 py-2 bg-primary text-on-primary font-label-bold text-label-bold rounded-lg hover:bg-primary-container transition-colors shadow-md">Tham
+                        gia ngay</button>
+                </div>
+
+                <!-- Hamburger Button -->
+                <button id="mobile-menu-btn"
+                    class="md:hidden flex items-center justify-center w-10 h-10 text-primary dark:text-white focus:outline-none transition-transform active:scale-90">
+                    <span class="material-symbols-outlined text-[32px]">menu</span>
+                </button>
             </div>
         </div>
+
     </nav>
+
+    <!-- Mobile Menu Drawer (Direct child of body to avoid nav clipping) -->
+    <div id="mobile-menu"
+        class="fixed inset-0 bg-white dark:bg-slate-900 z-[100] translate-x-full transition-transform duration-500 ease-in-out md:hidden flex flex-col overflow-y-auto">
+        <!-- Mobile Menu Header -->
+        <div
+            class="flex justify-between items-center h-20 px-6 border-b border-slate-100 dark:border-slate-800 shrink-0">
+            <div class="flex items-center gap-3">
+                <img src="./img/logo.png" alt="Logo" class="h-10 w-auto">
+                <div class="text-xl font-black text-primary dark:text-blue-100">ULIS Volunteer Connect</div>
+            </div>
+            <button id="mobile-menu-close" class="text-primary dark:text-white p-2">
+                <span class="material-symbols-outlined text-[32px]">close</span>
+            </button>
+        </div>
+
+        <!-- Menu Links -->
+        <div class="flex flex-col gap-2 p-6">
+            <a class="nav-link text-xl font-bold text-primary dark:text-blue-400 p-4 rounded-xl hover:bg-primary/5 transition-colors"
+                href="#">Trang chủ</a>
+            <a class="nav-link text-xl font-medium text-slate-600 dark:text-slate-300 p-4 rounded-xl hover:bg-primary/5 transition-colors"
+                href="#su-menh">Sứ mệnh</a>
+            <a class="nav-link text-xl font-medium text-slate-600 dark:text-slate-300 p-4 rounded-xl hover:bg-primary/5 transition-colors"
+                href="#tinh-nang">Tính năng</a>
+            <a class="nav-link text-xl font-medium text-slate-600 dark:text-slate-300 p-4 rounded-xl hover:bg-primary/5 transition-colors"
+                href="#khoanh-khac">Khoảnh khắc</a>
+            <a class="nav-link text-xl font-medium text-slate-600 dark:text-slate-300 p-4 rounded-xl hover:bg-primary/5 transition-colors"
+                href="#lien-he">Liên hệ</a>
+
+            <div class="mt-8 flex flex-col gap-4 px-4">
+                <button
+                    onclick="toggleMobileMenu(); document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
+                    class="w-full py-4 bg-primary text-white font-bold rounded-xl shadow-lg active:scale-95 transition-transform">Tham
+                    gia ngay</button>
+                <button
+                    onclick="toggleMobileMenu(); document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
+                    class="w-full py-4 bg-white text-primary border-2 border-primary font-bold rounded-xl active:scale-95 transition-transform">Dành
+                    cho tổ chức</button>
+            </div>
+        </div>
+
+        <div class="mt-auto pb-12 text-center text-slate-400 text-sm">
+            © 2026 ULIS Volunteer Connect
+        </div>
+    </div>
     <!-- Hero Section -->
-    <section class="relative bg-surface py-section-padding px-6 md:px-12 overflow-hidden">
-        <div class="max-w-container-max mx-auto">
+    <section class="relative bg-surface pt-section-padding pb-32 px-4 overflow-hidden">
+        <!-- Organic Blobs for Creativity -->
+        <div class="blob w-[500px] h-[500px] bg-primary top-[-10%] left-[-10%] opacity-10"></div>
+        <div class="blob w-[400px] h-[400px] bg-primary-container bottom-[10%] right-[-5%] opacity-5 anim-delay-neg-5">
+        </div>
+
+        <!-- Decorative Wavy Lines -->
+        <svg class="bg-line bg-line-float top-20 right-0 w-full max-w-[800px] opacity-10" viewBox="0 0 800 400">
+            <path d="M0,100 C150,50 300,150 450,100 C600,50 750,150 900,100" />
+            <path d="M0,150 C150,100 300,200 450,150 C600,100 750,200 900,150" opacity="0.5" />
+        </svg>
+
+        <div class="max-w-container-max mx-auto relative z-10">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
                 <div class="reveal fade-right z-10 flex flex-col gap-6">
-                    <h1 class="font-h1 text-h1 text-primary tracking-tight">Nối vòng tay lớn – Nền tảng kết nối Tình
+                    <h1 class="font-playfair font-bold text-h1 text-primary tracking-tight">ULIS Volunteer Connect – Nền
+                        tảng kết nối Tình
                         nguyện viên và Tổ chức Tình nguyện.</h1>
-                    <!-- Image for mobile/tablet -->
+                    <p class="font-h3 text-h3 text-on-surface-variant">Kết nối trái tim - Kiến tạo cơ hội</p>
+
+                    <!-- Video for mobile/tablet -->
                     <div
                         class="lg:hidden relative z-10 w-full aspect-video rounded-xl overflow-hidden shadow-[0px_8px_30px_rgba(0,66,157,0.1)] border border-surface-container">
-                        <img alt="Đội ngũ tình nguyện viên Mùa hè xanh 2024" class="w-full h-full object-cover"
-                            src="./img/banner.png" />
+                        <video id="hero-video-mobile" autoplay muted loop controls class="w-full h-full object-cover">
+                            <source src="./img/video%20cntttt.mp4" type="video/mp4">
+                        </video>
                     </div>
-                    <p class="font-h3 text-h3 text-on-surface-variant">Nơi nhiệt huyết gặp gỡ cơ hội – Nơi chung tay vì
-                        cộng đồng.</p>
                     <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">Nền tảng chuyên dụng nhằm hệ
                         thống hóa dữ liệu tuyển dụng tình nguyện viên. Cung cấp bộ lọc thông minh, minh bạch, giúp tổ
                         chức tiếp cận đúng đối tượng mục tiêu và hỗ trợ sinh viên tối ưu hóa lộ trình hoạt động ngoại
                         khóa.</p>
                     <div class="flex justify-center gap-4 mt-4">
                         <button
+                            onclick="document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
                             class="px-8 py-3 bg-primary text-on-primary font-label-bold text-label-bold rounded-lg hover:bg-primary-container transition-colors shadow-[0px_8px_30px_rgba(0,66,157,0.2)]">Tìm
                             dự án ngay</button>
                         <button
+                            onclick="document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
                             class="px-8 py-3 bg-white text-primary font-label-bold text-label-bold border border-outline-variant rounded-lg hover:bg-surface-container-low transition-colors">Đăng
                             dự án</button>
                     </div>
@@ -236,8 +532,9 @@
                 <div class="reveal fade-left flex flex-col gap-6 items-center text-center">
                     <div
                         class="hidden lg:block relative z-10 w-full aspect-video rounded-xl overflow-hidden shadow-[0px_8px_30px_rgba(0,66,157,0.1)] border border-surface-container">
-                        <img alt="Đội ngũ tình nguyện viên Mùa hè xanh 2024" class="w-full h-full object-cover"
-                            src="./img/banner.png" />
+                        <video id="hero-video-desktop" autoplay muted loop controls class="w-full h-full object-cover">
+                            <source src="./img/video%20cntttt.mp4" type="video/mp4">
+                        </video>
                     </div>
                     <div class="flex justify-center gap-8 mt-4 pt-6 border-t border-outline-variant/30 w-full">
                         <div class="reveal fade-up delay-200">
@@ -292,34 +589,63 @@
         <div
             class="absolute bottom-0 left-0 -ml-40 -mb-40 w-[400px] h-[400px] bg-inverse-primary/20 rounded-full blur-[80px] pointer-events-none">
         </div>
+
     </section>
     <!-- Mission Section -->
-    <section class="py-section-padding px-6 md:px-12 bg-white" id="su-menh">
-        <div class="max-w-container-max mx-auto">
+    <section class="py-section-padding px-6 md:px-12 bg-white relative overflow-hidden" id="su-menh">
+        <!-- Creative Background Elements -->
+        <div class="absolute inset-0 bg-dots pointer-events-none"></div>
+        <div class="blob w-[600px] h-[600px] bg-primary/5 top-[-10%] left-[-10%] blur-[120px]"></div>
+        <div
+            class="blob w-[400px] h-[400px] bg-inverse-primary/10 bottom-[10%] right-[-5%] blur-[100px] anim-delay-neg-8">
+        </div>
+
+        <!-- Background Line Art -->
+        <svg class="bg-line bg-line-float bottom-0 left-0 w-full max-w-[600px] opacity-5" viewBox="0 0 600 300">
+            <path d="M-50,250 Q150,50 350,250 T750,250" />
+        </svg>
+
+        <div class="max-w-container-max mx-auto relative z-10">
             <!-- Mission Header with Image -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-20">
                 <div class="reveal fade-right">
-                    <h2 class="font-h2 text-h2 text-primary mb-6 uppercase tracking-wider">SỨ MỆNH: KHƠI NGUỒN NHIỆT HUYẾT – KẾT NỐI GIÁ TRỊ</h2>
+                    <h2 class="font-playfair font-bold text-h2 text-primary mb-6 uppercase tracking-wider">SỨ MỆNH: KHƠI
+                        NGUỒN NHIỆT
+                        HUYẾT – KẾT NỐI GIÁ TRỊ</h2>
                     <p class="font-body-lg text-body-lg text-on-surface-variant mb-6 leading-relaxed">
-                        Nối vòng tay lớn ra đời nhằm kết nối sinh viên với các cơ hội tình nguyện một cách hiệu quả và ý nghĩa. 
-                        Trong bối cảnh sinh viên cần vừa phát triển bản thân vừa đóng góp cho xã hội, nền tảng giúp giải quyết 
+                        ULIS Volunteer Connect ra đời nhằm kết nối sinh viên với các cơ hội tình nguyện một cách hiệu
+                        quả và ý
+                        nghĩa.
+                        Trong bối cảnh sinh viên cần vừa phát triển bản thân vừa đóng góp cho xã hội, nền tảng giúp giải
+                        quyết
                         khoảng cách giữa người muốn cống hiến và các tổ chức đang cần hỗ trợ.
                     </p>
                     <div class="p-6 bg-primary/5 border-l-4 border-primary rounded-r-xl">
                         <p class="font-body-md text-on-surface italic">
-                            Chúng tôi hướng đến việc xây dựng một hệ sinh thái thiện nguyện minh bạch, nơi mỗi đóng góp đều được trân trọng và mỗi cá nhân đều có cơ hội tỏa sáng.
+                            Chúng tôi hướng đến việc xây dựng một hệ sinh thái thiện nguyện minh bạch, nơi mỗi đóng góp
+                            đều được trân trọng và mỗi cá nhân đều có cơ hội tỏa sáng.
                         </p>
                     </div>
                 </div>
                 <div class="reveal fade-left relative">
-                    <div class="relative rounded-[32px] overflow-hidden shadow-[0px_20px_50px_rgba(0,66,157,0.15)] z-10 group">
-                        <img src="./img/Sứ mệnh của chúng tôi.JPG" alt="Sứ mệnh Nối vòng tay lớn" 
-                            class="w-full h-full object-cover aspect-[4/3] group-hover:scale-110 transition-transform duration-1000">
-                        <div class="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div
+                        class="relative rounded-[32px] overflow-hidden shadow-[0px_40px_80px_rgba(0,66,157,0.15)] z-10 group border-4 border-white transition-all duration-500 hover:shadow-[0px_60px_100px_rgba(0,66,157,0.25)] hover:-translate-y-2">
+                        <div class="shine-sweep w-full h-full">
+                            <img src="./img/Sứ mệnh của chúng tôi.JPG" alt="Sứ mệnh ULIS Volunteer Connect"
+                                class="w-full h-full object-cover aspect-[4/3] group-hover:scale-105 transition-transform duration-1000">
+                        </div>
                     </div>
+                    <!-- Creative highlights -->
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl animate-pulse">
+                    </div>
+                    <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-inverse-primary/10 rounded-full blur-2xl">
+                    </div>
+
                     <!-- Decorative back frame -->
                     <div class="absolute -top-4 -left-4 w-24 h-24 bg-primary/10 rounded-full -z-10 blur-2xl"></div>
-                    <div class="absolute -bottom-6 -right-6 w-full h-full border-2 border-primary/10 rounded-[32px] -z-10"></div>
+                    <div
+                        class="absolute -bottom-8 -right-8 w-full h-full border-2 border-primary/20 rounded-[32px] -z-10">
+                    </div>
                 </div>
             </div>
 
@@ -370,9 +696,10 @@
             </div>
 
             <!-- Closing Statement -->
-            <div class="mt-16 text-center border-t border-surface-container pt-12">
+            <div class="mt-16 text-center  pt-12">
                 <p class="font-body-lg text-body-lg text-on-surface-variant max-w-4xl mx-auto italic">
-                    "Với niềm tin rằng tình nguyện là sự trao đổi giá trị và công nghệ có thể kết nối con người, Nối vòng tay lớn mong muốn
+                    "Với niềm tin rằng tình nguyện là sự trao đổi giá trị và công nghệ có thể kết nối con người, ULIS
+                    Volunteer Connect mong muốn
                     lan tỏa những hành động nhỏ tạo nên thay đổi lớn, góp phần xây dựng hình ảnh sinh viên Việt Nam năng
                     động, trách nhiệm và giàu lòng nhân ái."
                 </p>
@@ -380,10 +707,21 @@
         </div>
     </section>
     <!-- Features Bento Grid -->
-    <section class="py-section-padding px-6 md:px-12 bg-surface" id="tinh-nang">
-        <div class="max-w-container-max mx-auto">
+    <section class="py-section-padding px-6 md:px-12 bg-surface relative overflow-hidden" id="tinh-nang">
+
+        <!-- Creative Background -->
+        <div class="absolute inset-0 bg-dots pointer-events-none opacity-[0.06]"></div>
+        <div class="blob w-[500px] h-[500px] bg-primary/10 -top-20 -left-20 blur-[100px]"></div>
+        <div class="blob w-[400px] h-[400px] bg-tertiary/10 bottom-0 right-0 blur-[80px] anim-delay-neg-5"></div>
+
+        <!-- Decorative Background Lines -->
+        <svg class="bg-line bg-line-float top-1/4 left-0 w-full max-w-[700px] opacity-[0.08]" viewBox="0 0 700 300">
+            <path d="M0,150 Q175,50 350,150 T700,150" />
+        </svg>
+
+        <div class="max-w-container-max mx-auto relative z-20">
             <div class="reveal fade-up text-center mb-12">
-                <h2 class="font-h2 text-h2 text-primary mb-2">Tính năng nổi bật</h2>
+                <h2 class="font-playfair font-bold text-h2 text-primary mb-2">Tính năng nổi bật</h2>
                 <p class="font-h3 text-[20px] leading-tight font-semibold text-on-surface mb-4">Kết nối dễ dàng – Lan
                     tỏa giá trị, nhân rộng yêu thương</p>
                 <p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl mx-auto">Khám phá bộ công cụ tối
@@ -476,7 +814,7 @@
     <section class="py-section-padding px-6 md:px-12 bg-white">
         <div class="max-w-container-max mx-auto">
             <div class="reveal fade-up text-center mb-12">
-                <h2 class="font-h2 text-h2 text-primary mb-2">Tiếng nói từ cộng đồng</h2>
+                <h2 class="font-playfair font-bold text-h2 text-primary mb-2">Tiếng nói từ cộng đồng</h2>
                 <p class="font-h3 text-[20px] leading-tight font-semibold text-on-surface mb-2">Nhận xét từ người dùng
                 </p>
                 <p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl mx-auto">Những chia sẻ từ các tổ
@@ -484,115 +822,115 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
                 <!-- Review 1 -->
-                <div class="reveal fade-up bg-surface p-6 rounded-xl border border-surface-container">
-                    <div class="flex text-yellow-400 mb-4">
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                    </div>
-                    <p class="font-body-md text-body-md text-on-surface mb-6 italic">“Nhờ nền tảng này, chúng tôi đã
-                        tiếp cận được nhiều bạn tình nguyện viên phù hợp hơn trong thời gian ngắn. Quy trình đăng ký rõ
-                        ràng, dễ sử dụng và giúp CLB tiết kiệm rất nhiều thời gian trong việc tuyển chọn.”</p>
-                    <div class="flex items-center gap-3">
+                <div
+                    class="reveal fade-up bg-surface p-6 rounded-xl border border-surface-container flex flex-col h-full">
+                    <div class="flex items-center gap-3 mb-4">
                         <div
                             class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold">
                             C</div>
                         <div>
                             <p class="font-label-bold text-label-bold text-on-surface">Tổ chức - CLB Sức Trẻ</p>
-                            <p class="font-label-sm text-label-sm text-on-surface-variant">5 sao</p>
+                            <div class="flex text-yellow-400">
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                            </div>
                         </div>
                     </div>
+                    <p class="font-body-md text-body-md text-on-surface italic">“Nhờ nền tảng này, chúng tôi đã
+                        tiếp cận được nhiều bạn tình nguyện viên phù hợp hơn trong thời gian ngắn. Quy trình đăng ký rõ
+                        ràng, dễ sử dụng và giúp CLB tiết kiệm rất nhiều thời gian trong việc tuyển chọn.”</p>
                 </div>
                 <!-- Review 2 -->
-                <div class="reveal fade-up delay-100 bg-surface p-6 rounded-xl border border-surface-container">
-                    <div class="flex text-yellow-400 mb-4">
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                    </div>
-                    <p class="font-body-md text-body-md text-on-surface mb-6 italic">“Trước đây mình rất khó khăn trong
-                        việc tìm các hoạt động tình nguyện phù hợp với bản thân nhưng từ khi sử dụng nền tảng, mình đã
-                        có thể dễ dàng lựa chọn chương trình theo sở thích và thời gian cá nhân.”</p>
-                    <div class="flex items-center gap-3">
+                <div
+                    class="reveal fade-up delay-100 bg-surface p-6 rounded-xl border border-surface-container flex flex-col h-full">
+                    <div class="flex items-center gap-3 mb-4">
                         <div
                             class="w-10 h-10 bg-tertiary/10 rounded-full flex items-center justify-center text-tertiary font-bold">
                             MN</div>
                         <div>
                             <p class="font-label-bold text-label-bold text-on-surface">Tình nguyện viên - Minh Ngọc</p>
-                            <p class="font-label-sm text-label-sm text-on-surface-variant">5 sao</p>
+                            <div class="flex text-yellow-400">
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                            </div>
                         </div>
                     </div>
+                    <p class="font-body-md text-body-md text-on-surface italic">“Trước đây mình rất khó khăn trong
+                        việc tìm các hoạt động tình nguyện phù hợp với bản thân nhưng từ khi sử dụng nền tảng, mình đã
+                        có thể dễ dàng lựa chọn chương trình theo sở thích và thời gian cá nhân.”</p>
                 </div>
                 <!-- Review 3 -->
-                <div class="reveal fade-up delay-200 bg-surface p-6 rounded-xl border border-surface-container">
-                    <div class="flex text-yellow-400 mb-4">
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                    </div>
-                    <p class="font-body-md text-body-md text-on-surface mb-6 italic">“Nền tảng giúp chúng tôi kết nối
-                        hiệu quả với các bạn tình nguyện trẻ, từ đó giúp cho việc lan tỏa các hoạt động ý nghĩa của tổ
-                        chức nhanh chóng và rộng rãi hơn.”</p>
-                    <div class="flex items-center gap-3">
+                <div
+                    class="reveal fade-up delay-200 bg-surface p-6 rounded-xl border border-surface-container flex flex-col h-full">
+                    <div class="flex items-center gap-3 mb-4">
                         <div
                             class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold">
                             GL</div>
                         <div>
                             <p class="font-label-bold text-label-bold text-on-surface">Tổ chức - Tổ chức Green Life</p>
-                            <p class="font-label-sm text-label-sm text-on-surface-variant">5 sao</p>
+                            <div class="flex text-yellow-400">
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                            </div>
                         </div>
                     </div>
+                    <p class="font-body-md text-body-md text-on-surface italic">“Nền tảng giúp chúng tôi kết nối
+                        hiệu quả với các bạn tình nguyện trẻ, từ đó giúp cho việc lan tỏa các hoạt động ý nghĩa của tổ
+                        chức nhanh chóng và rộng rãi hơn.”</p>
                 </div>
                 <!-- Review 4 -->
-                <div class="reveal fade-up delay-300 bg-surface p-6 rounded-xl border border-surface-container">
-                    <div class="flex text-yellow-400 mb-4">
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                    </div>
-                    <p class="font-body-md text-body-md text-on-surface mb-6 italic">“Nền tảng cung cấp thông tin rất rõ
-                        ràng và minh bạch, giúp mình yên tâm khi đăng ký tham gia. Mình cũng học hỏi được nhiều kỹ năng
-                        mới sau mỗi hoạt động.”</p>
-                    <div class="flex items-center gap-3">
+                <div
+                    class="reveal fade-up delay-300 bg-surface p-6 rounded-xl border border-surface-container flex flex-col h-full">
+                    <div class="flex items-center gap-3 mb-4">
                         <div
                             class="w-10 h-10 bg-tertiary/10 rounded-full flex items-center justify-center text-tertiary font-bold">
                             HL</div>
                         <div>
                             <p class="font-label-bold text-label-bold text-on-surface">Tình nguyện viên - Hoàng Long</p>
-                            <p class="font-label-sm text-label-sm text-on-surface-variant">5 sao</p>
+                            <div class="flex text-yellow-400">
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                            </div>
                         </div>
                     </div>
+                    <p class="font-body-md text-body-md text-on-surface italic">“Nền tảng cung cấp thông tin rất rõ
+                        ràng và minh bạch, giúp mình yên tâm khi đăng ký tham gia. Mình cũng học hỏi được nhiều kỹ năng
+                        mới sau mỗi hoạt động.”</p>
                 </div>
                 <!-- Review 5 -->
-                <div class="reveal fade-up delay-400 bg-surface p-6 rounded-xl border border-surface-container">
-                    <div class="flex text-yellow-400 mb-4">
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                        <span class="material-symbols-outlined filled-icon text-[20px]">star</span>
-                    </div>
-                    <p class="font-body-md text-body-md text-on-surface mb-6 italic">“Mình thấy nền tảng rất ý nghĩa khi
-                        kết nối cộng đồng và các cá nhân có chung mong muốn tham gia những hoạt động có ích đến cộng
-                        đồng. Đối với mình, nền tảng không chỉ là nơi tìm kiếm cơ hội mà còn là nơi lan tỏa những giá
-                        trị tích cực.”</p>
-                    <div class="flex items-center gap-3">
+                <div
+                    class="reveal fade-up delay-400 bg-surface p-6 rounded-xl border border-surface-container flex flex-col h-full">
+                    <div class="flex items-center gap-3 mb-4">
                         <div
                             class="w-10 h-10 bg-tertiary/10 rounded-full flex items-center justify-center text-tertiary font-bold">
                             TH</div>
                         <div>
                             <p class="font-label-bold text-label-bold text-on-surface">Tình nguyện viên - Thu Hà</p>
-                            <p class="font-label-sm text-label-sm text-on-surface-variant">5 sao</p>
+                            <div class="flex text-yellow-400">
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                                <span class="material-symbols-outlined filled-icon text-[16px]">star</span>
+                            </div>
                         </div>
                     </div>
+                    <p class="font-body-md text-body-md text-on-surface italic">“Mình thấy nền tảng rất ý nghĩa khi
+                        kết nối cộng đồng và các cá nhân có chung mong muốn tham gia những hoạt động có ích đến cộng
+                        đồng. Đối với mình, nền tảng không chỉ là nơi tìm kiếm cơ hội mà còn là nơi lan tỏa những giá
+                        trị tích cực.”</p>
                 </div>
             </div>
             <style>
@@ -602,7 +940,6 @@
 
                 .hide-scrollbar {
                     -ms-overflow-style: none;
-                    scrollbar-width: none;
                 }
             </style>
         </div>
@@ -619,9 +956,10 @@
 
         <div class="max-w-container-max mx-auto relative z-10">
             <div class="reveal fade-up text-center mb-20 max-w-4xl mx-auto">
-                <h2 class="font-h2 text-h2 text-primary mb-8 leading-tight">Chia sẻ khoảnh khắc</h2>
+                <h2 class="font-playfair font-bold text-h2 text-primary mb-8 leading-tight">Chia sẻ khoảnh khắc</h2>
                 <p class="font-body-lg text-body-lg text-on-surface-variant mb-6 leading-relaxed">Chỉ trong một khoảng
-                    thời gian ngắn triển khai, Nối vòng tay lớn đã ghi nhận hơn <span class="text-primary font-bold">50+
+                    thời gian ngắn triển khai, ULIS Volunteer Connect đã ghi nhận hơn <span
+                        class="text-primary font-bold">50+
                         lượt chia sẻ</span> khoảnh khắc từ các sinh viên và tổ chức tham gia. Mỗi câu chuyện là một trải
                     nghiệm riêng, nhưng đều có điểm chung: đó là những dấu ấn của sự kết nối, trưởng thành và lan tỏa
                     giá trị.</p>
@@ -631,30 +969,30 @@
                     những hành trình ý nghĩa đã được mở ra.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
+            <div class="moments-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
                 <!-- Moment Card 1 -->
                 <div
                     class="reveal fade-up group bg-white rounded-[32px] overflow-hidden shadow-[0px_20px_50px_rgba(0,0,0,0.04)] hover:shadow-[0px_30px_70px_rgba(0,66,157,0.15)] transition-all duration-500 border border-surface-container flex flex-col hover:-translate-y-2">
                     <div class="relative">
-                        <div class="w-full aspect-[16/11] relative overflow-hidden rounded-[32px] isolate">
+                        <div class="w-full aspect-[4/3] relative overflow-hidden rounded-t-[32px] isolate">
                             <img alt="Khoảnh khắc tình nguyện mùa hè xanh"
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
                                 src="./img/unnamed (1).jpg" />
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/100 via-black/50 to-transparent opacity-80">
+                            <div class="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent">
                             </div>
                         </div>
                         <div class="absolute bottom-0 translate-y-1/2 left-6 right-6 z-10">
-                            <div class="backdrop-blur-md bg-black/40 border border-white/20 p-5 rounded-2xl">
+                            <div
+                                class="backdrop-blur-md bg-white/90 border border-primary/10 p-5 rounded-2xl shadow-sm">
                                 <span
-                                    class="text-white/70 font-label-bold tracking-widest uppercase text-[11px] mb-2 block">20/04/2026
+                                    class="text-primary/60 font-label-bold tracking-widest uppercase text-[11px] mb-2 block font-bold">20/04/2026
                                     - Chiến dịch Mùa hè xanh</span>
-                                <h3 class="font-h3 text-white text-[20px] leading-tight font-bold">KHOẢNH KHẮC TÌNH
-                                    NGUYỆN SỐ 1</h3>
+                                <h3 class="font-h3 text-primary text-[18px] leading-tight font-bold uppercase">KHOẢNH
+                                    KHẮC SỐ 1</h3>
                             </div>
                         </div>
                     </div>
-                    <div class="p-8 pt-12 flex-grow">
+                    <div class="p-8 pt-16 flex-grow">
                         <div class="relative">
                             <span
                                 class="material-symbols-outlined text-primary/20 text-5xl absolute -top-4 -left-6 opacity-50">format_quote</span>
@@ -681,25 +1019,25 @@
                 <div
                     class="reveal fade-up delay-200 group bg-white rounded-[32px] overflow-hidden shadow-[0px_20px_50px_rgba(0,0,0,0.04)] hover:shadow-[0px_30px_70px_rgba(0,66,157,0.15)] transition-all duration-500 border border-surface-container flex flex-col hover:-translate-y-2">
                     <div class="relative">
-                        <div class="w-full aspect-[16/11] relative overflow-hidden rounded-[32px] isolate">
+                        <div class="w-full aspect-[4/3] relative overflow-hidden rounded-t-[32px] isolate">
                             <img alt="Khoảnh khắc thắp sáng đường quê"
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
                                 src="./img/1-1722055423.jpg" />
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/100 via-black/50 to-transparent opacity-80">
+                            <div class="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent">
                             </div>
                         </div>
                         <div class="absolute bottom-0 translate-y-1/2 left-6 right-6 z-10">
-                            <div class="backdrop-blur-md bg-black/40 border border-white/20 p-5 rounded-2xl">
+                            <div
+                                class="backdrop-blur-md bg-white/90 border border-primary/10 p-5 rounded-2xl shadow-sm">
                                 <span
-                                    class="text-white/70 font-label-bold tracking-widest uppercase text-[11px] mb-2 block">18/05/2026
-                                    - Chương trình thắp sáng đường quê</span>
-                                <h3 class="font-h3 text-white text-[20px] leading-tight font-bold">KHOẢNH KHẮC TÌNH
-                                    NGUYỆN SỐ 2</h3>
+                                    class="text-primary/60 font-label-bold tracking-widest uppercase text-[11px] mb-2 block font-bold">18/05/2026
+                                    - thắp sáng đường quê</span>
+                                <h3 class="font-h3 text-primary text-[18px] leading-tight font-bold uppercase">KHOẢNH
+                                    KHẮC SỐ 2</h3>
                             </div>
                         </div>
                     </div>
-                    <div class="p-8 pt-12 flex-grow">
+                    <div class="p-8 pt-16 flex-grow">
                         <div class="relative">
                             <span
                                 class="material-symbols-outlined text-primary/20 text-5xl absolute -top-4 -left-6 opacity-50">format_quote</span>
@@ -728,25 +1066,25 @@
                 <div
                     class="reveal fade-up delay-400 group bg-white rounded-[32px] overflow-hidden shadow-[0px_20px_50px_rgba(0,0,0,0.04)] hover:shadow-[0px_30px_70px_rgba(0,66,157,0.15)] transition-all duration-500 border border-surface-container flex flex-col hover:-translate-y-2">
                     <div class="relative">
-                        <div class="w-full aspect-[16/11] relative overflow-hidden rounded-[32px] isolate">
+                        <div class="w-full aspect-[4/3] relative overflow-hidden rounded-t-[32px] isolate">
                             <img alt="Khoảnh khắc chương trình mùa đông ấm"
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
                                 src="./img/images.jpg" />
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/100 via-black/50 to-transparent opacity-80">
+                            <div class="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent">
                             </div>
                         </div>
                         <div class="absolute bottom-0 translate-y-1/2 left-6 right-6 z-10">
-                            <div class="backdrop-blur-md bg-black/40 border border-white/20 p-5 rounded-2xl">
+                            <div
+                                class="backdrop-blur-md bg-white/90 border border-primary/10 p-5 rounded-2xl shadow-sm">
                                 <span
-                                    class="text-white/70 font-label-bold tracking-widest uppercase text-[11px] mb-2 block">12/06/2026
+                                    class="text-primary/60 font-label-bold tracking-widest uppercase text-[11px] mb-2 block font-bold">12/06/2026
                                     - Chương trình Mùa đông ấm</span>
-                                <h3 class="font-h3 text-white text-[20px] leading-tight font-bold">KHOẢNH KHẮC TÌNH
-                                    NGUYỆN SỐ 3</h3>
+                                <h3 class="font-h3 text-primary text-[18px] leading-tight font-bold uppercase">KHOẢNH
+                                    KHẮC SỐ 3</h3>
                             </div>
                         </div>
                     </div>
-                    <div class="p-8 pt-12 flex-grow">
+                    <div class="p-8 pt-16 flex-grow">
                         <div class="relative">
                             <span
                                 class="material-symbols-outlined text-primary/20 text-5xl absolute -top-4 -left-6 opacity-50">format_quote</span>
@@ -778,19 +1116,24 @@
         id="lien-he">
         <div class="reveal zoom-in bg-primary py-16 px-6 relative overflow-hidden">
             <div class="max-w-container-max mx-auto text-center relative z-10">
-                <h2 class="reveal fade-up font-h1 text-[36px] md:text-h1 text-white mb-4 tracking-tight">Từng bước chân
+                <h2
+                    class="reveal fade-up font-playfair font-bold text-[36px] md:text-h1 text-white mb-4 tracking-tight">
+                    Từng bước chân
                     – Bắt đầu hôm
                     nay, thay đổi ngày mai</h2>
                 <p class="reveal fade-up delay-200 font-body-lg text-body-lg text-white/80 max-w-3xl mx-auto mb-8">Chỉ
-                    cần một bước nhỏ, bạn đã có thể bắt đầu hành trình tình nguyện của chính mình. Nối vòng tay lớn sẽ
+                    cần một bước nhỏ, bạn đã có thể bắt đầu hành trình tình nguyện của chính mình. ULIS Volunteer
+                    Connect sẽ
                     giúp bạn khám phá cơ hội phù hợp, kết nối đáng tin cậy để bạn bắt đầu hành trình tình nguyện của
                     riêng bạn. Chúng tôi cam kết mang đến một nền tảng minh bạch, dễ tiếp cận và hoàn toàn miễn phí. Chỉ
                     cần bạn bắt đầu, mọi bước đi đều có ý nghĩa.</p>
                 <div class="reveal fade-up delay-400 flex flex-col sm:flex-row gap-4 justify-center">
                     <button
+                        onclick="document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
                         class="px-8 py-4 bg-white text-primary font-label-bold text-label-bold rounded-lg hover:bg-surface-container-low transition-colors shadow-lg">Đăng
-                        ký tình nguyện viên</button>
+                        ký tài khoản tổ chức</button>
                     <button
+                        onclick="document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
                         class="px-8 py-4 bg-transparent text-white font-label-bold text-label-bold border border-white/30 rounded-lg hover:bg-white/10 transition-colors">Tạo
                         tài khoản tổ chức</button>
                 </div>
@@ -801,59 +1144,403 @@
             </div>
         </div>
         <!-- Footer Content -->
-        <div class="w-full py-16 px-6 md:px-12">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:flex lg:justify-between gap-8 max-w-screen-2xl mx-auto">
-                <div class="flex flex-col gap-4">
-                    <div class="text-lg font-bold text-blue-800 dark:text-blue-200">
-                        Nối Vòng Tay Lớn
+        <div class="max-w-container-max mx-auto py-20 px-6 md:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16">
+                <!-- Branding Column -->
+                <div class="flex flex-col gap-6">
+                    <div class="flex flex-col gap-3">
+                        <div class="text-2xl font-playfair font-bold text-primary dark:text-blue-200 tracking-tight">
+                            ULIS Volunteer Connect
+                        </div>
+                        <p class="text-slate-500 dark:text-slate-400 leading-relaxed text-base">
+                            Nền tảng kết nối Tình nguyện viên và Tổ chức Tình nguyện hàng đầu Việt Nam. Lan tỏa yêu
+                            thương, kiến tạo giá trị bền vững cho cộng đồng.
+                        </p>
                     </div>
-                    <p class="text-slate-500 dark:text-slate-400 max-w-xs">Nền tảng kết nối Tình nguyện viên và Tổ chức
-                        Tình nguyện hàng đầu Việt Nam.</p>
+                    <div class="flex gap-3">
+                        <a href="https://www.facebook.com/ULISVolunteerConnect" target="_blank"
+                            rel="noopener noreferrer" title="Facebook"
+                            class="w-10 h-10 bg-primary/5 text-primary hover:bg-primary hover:text-white rounded-xl flex items-center justify-center transition-all duration-300 shadow-sm">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                                <path
+                                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                            </svg>
+                        </a>
+                        <a href="https://www.instagram.com/ULISVolunteerConnect" target="_blank"
+                            rel="noopener noreferrer" title="Instagram"
+                            class="w-10 h-10 bg-primary/5 text-primary hover:bg-primary hover:text-white rounded-xl flex items-center justify-center transition-all duration-300 shadow-sm">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.266.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            </svg>
+                        </a>
+                        <!-- <a href="#" title="Email" class="w-10 h-10 bg-primary/5 text-primary hover:bg-primary hover:text-white rounded-xl flex items-center justify-center transition-all duration-300 shadow-sm">
+                            <span class="material-symbols-outlined text-[20px]">mail</span>
+                        </a> -->
+                    </div>
                 </div>
-                <div class="flex flex-col md:flex-row gap-8 lg:gap-16">
-                    <div class="flex flex-col gap-3">
-                        <a class="text-slate-500 dark:text-slate-400 font-semibold hover:text-blue-700 dark:hover:text-blue-300 underline-offset-4 focus:ring-2 focus:ring-blue-500 outline-none transition-colors"
-                            href="#">Về chúng tôi</a>
-                        <a class="text-slate-500 dark:text-slate-400 font-semibold hover:text-blue-700 dark:hover:text-blue-300 underline-offset-4 focus:ring-2 focus:ring-blue-500 outline-none transition-colors"
-                            href="#">Hợp tác</a>
-                    </div>
-                    <div class="flex flex-col gap-3">
-                        <a class="text-slate-500 dark:text-slate-400 font-semibold hover:text-blue-700 dark:hover:text-blue-300 underline-offset-4 focus:ring-2 focus:ring-blue-500 outline-none transition-colors"
-                            href="#">Chính sách bảo mật</a>
-                        <a class="text-slate-500 dark:text-slate-400 font-semibold hover:text-blue-700 dark:hover:text-blue-300 underline-offset-4 focus:ring-2 focus:ring-blue-500 outline-none transition-colors"
-                            href="#">Điều khoản sử dụng</a>
-                    </div>
+
+                <!-- Navigation Column -->
+                <div class="flex flex-col gap-6">
+                    <h4 class="font-label-bold text-on-surface uppercase tracking-widest text-[13px] font-bold">Khám phá
+                    </h4>
+                    <ul class="flex flex-col gap-4">
+                        <li><a href="#"
+                                class="text-slate-500 hover:text-primary transition-colors flex items-center gap-2 group"><span
+                                    class="w-1.5 h-1.5 bg-primary/20 rounded-full group-hover:bg-primary transition-colors"></span>Về
+                                chúng tôi</a></li>
+                        <li><a href="#su-menh"
+                                class="text-slate-500 hover:text-primary transition-colors flex items-center gap-2 group"><span
+                                    class="w-1.5 h-1.5 bg-primary/20 rounded-full group-hover:bg-primary transition-colors"></span>Sứ
+                                mệnh</a></li>
+                        <li><a href="#tinh-nang"
+                                class="text-slate-500 hover:text-primary transition-colors flex items-center gap-2 group"><span
+                                    class="w-1.5 h-1.5 bg-primary/20 rounded-full group-hover:bg-primary transition-colors"></span>Tính
+                                năng</a></li>
+                        <li><a href="#"
+                                class="text-slate-500 hover:text-primary transition-colors flex items-center gap-2 group"><span
+                                    class="w-1.5 h-1.5 bg-primary/20 rounded-full group-hover:bg-primary transition-colors"></span>Hợp
+                                tác</a></li>
+                    </ul>
+                </div>
+
+                <!-- Policy Column -->
+                <div class="flex flex-col gap-6">
+                    <h4 class="font-label-bold text-on-surface uppercase tracking-widest text-[13px] font-bold">Quy định
+                    </h4>
+                    <ul class="flex flex-col gap-4">
+                        <li><a href="#"
+                                class="text-slate-500 hover:text-primary transition-colors flex items-center gap-2 group"><span
+                                    class="w-1.5 h-1.5 bg-primary/20 rounded-full group-hover:bg-primary transition-colors"></span>Chính
+                                sách bảo mật</a></li>
+                        <li><a href="#"
+                                class="text-slate-500 hover:text-primary transition-colors flex items-center gap-2 group"><span
+                                    class="w-1.5 h-1.5 bg-primary/20 rounded-full group-hover:bg-primary transition-colors"></span>Điều
+                                khoản sử dụng</a></li>
+                        <li><a href="#"
+                                class="text-slate-500 hover:text-primary transition-colors flex items-center gap-2 group"><span
+                                    class="w-1.5 h-1.5 bg-primary/20 rounded-full group-hover:bg-primary transition-colors"></span>Quyền
+                                lợi thành viên</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Column -->
+                <div class="flex flex-col gap-6">
+                    <h4 class="font-label-bold text-on-surface uppercase tracking-widest text-[13px] font-bold">Thông
+                        tin liên hệ</h4>
+                    <ul class="flex flex-col gap-5 text-slate-500">
+                        <li class="flex items-start gap-4 group">
+                            <div
+                                class="w-9 h-9 bg-primary/5 text-primary rounded-lg flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
+                                <span class="material-symbols-outlined text-[18px]">location_on</span>
+                            </div>
+                            <span class="text-sm leading-relaxed">Số 2 Phạm Văn Đồng, Cầu Giấy, Hà Nội</span>
+                        </li>
+                        <li class="flex items-center gap-4 group">
+                            <div
+                                class="w-9 h-9 bg-primary/5 text-primary rounded-lg flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
+                                <span class="material-symbols-outlined text-[18px]">call</span>
+                            </div>
+                            <a href="tel:0965546582"
+                                class="text-sm hover:text-primary transition-colors font-medium">0965546582</a>
+                        </li>
+                        <li class="flex items-center gap-4 group">
+                            <div
+                                class="w-9 h-9 bg-primary/5 text-primary rounded-lg flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
+                                <span class="material-symbols-outlined text-[18px]">mail</span>
+                            </div>
+                            <a href="mailto:ulisvolunteerconnect@gmail.com"
+                                class="text-sm hover:text-primary transition-colors font-medium break-all">ulisvolunteerconnect@gmail.com</a>
+                        </li>
+                        <li class="flex items-center gap-4 group">
+                            <div
+                                class="w-9 h-9 bg-primary/5 text-primary rounded-lg flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
+                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                    <path
+                                        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                                </svg>
+                            </div>
+                            <a href="https://www.facebook.com/ULISVolunteerConnect" target="_blank"
+                                rel="noopener noreferrer"
+                                class="text-sm hover:text-primary transition-colors font-medium">Facebook: ULIS
+                                Volunteer Connect</a>
+                        </li>
+                        <li class="flex items-center gap-4 group">
+                            <div
+                                class="w-9 h-9 bg-primary/5 text-primary rounded-lg flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
+                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.266.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                                </svg>
+                            </div>
+                            <a href="https://www.instagram.com/ULISVolunteerConnect" target="_blank"
+                                rel="noopener noreferrer"
+                                class="text-sm hover:text-primary transition-colors font-medium">Instagram:
+                                @ULISVolunteerConnect</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
+
+            <!-- Copyright Area -->
             <div
-                class="max-w-screen-2xl mx-auto mt-12 pt-8 border-t border-slate-200/50 dark:border-slate-800/50 text-slate-500 dark:text-slate-400 text-sm">
-                © 2024 Nối Vòng Tay Lớn. Kết nối sức trẻ, lan tỏa yêu thương.
+                class="mt-20 pt-8 border-t border-slate-200/60 flex flex-col md:flex-row justify-between items-center gap-6 text-slate-400 text-[12px] uppercase tracking-[0.2em] font-semibold">
+                <div class="flex items-center gap-2">
+                    <span>© 2026</span>
+                    <span class="w-1 h-1 bg-slate-300 rounded-full"></span>
+                    <span>ULIS Volunteer Connect</span>
+                </div>
+                <div class="flex gap-8">
+                    <span class="hover:text-primary transition-colors cursor-default">Trái tim Việt Nam</span>
+                    <span class="hover:text-primary transition-colors cursor-default">Kết nối giá trị</span>
+                </div>
             </div>
         </div>
-    </footer>
-    <script>
-        // Intersection Observer for Scroll Animations
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.15
-        };
+        <!-- Registration Modal -->
+        <div id="register-modal"
+            class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 backdrop-blur-sm px-4">
+            <div
+                class="bg-surface w-full max-w-md rounded-2xl p-6 md:p-8 shadow-2xl relative animate-[fade-up_0.3s_ease-out]">
+                <button
+                    onclick="document.getElementById('register-modal').classList.remove('flex'); document.getElementById('register-modal').classList.add('hidden');"
+                    class="absolute top-4 right-4 text-on-surface-variant hover:text-on-surface transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    // Optional: Stop observing after animation triggers
-                    // observer.unobserve(entry.target);
+                <h3 class="font-h2 text-2xl text-primary mb-2">Đăng ký tham gia</h3>
+                <p class="font-body-sm text-on-surface-variant mb-6">Điền thông tin của bạn để chúng tôi có thể liên hệ
+                    và hỗ trợ tốt nhất.</p>
+
+                <form class="flex flex-col gap-4"
+                    onsubmit="event.preventDefault(); alert('Đăng ký thành công! Chúng tôi sẽ liên hệ với bạn sớm nhất.'); document.getElementById('register-modal').classList.remove('flex'); document.getElementById('register-modal').classList.add('hidden');">
+                    <div>
+                        <label for="register-name" class="block font-label-md text-on-surface mb-2 font-medium">Họ và
+                            tên *</label>
+                        <input type="text" id="register-name" name="name" title="Họ và tên" required
+                            placeholder="Nhập họ và tên"
+                            class="w-full px-4 py-3 rounded-xl border-2 border-primary focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all placeholder:text-slate-400">
+                    </div>
+                    <div>
+                        <label for="register-phone" class="block font-label-md text-on-surface mb-1">Số điện thoại
+                            *</label>
+                        <input type="tel" id="register-phone" name="phone" title="Số điện thoại" required
+                            placeholder="Nhập số điện thoại"
+                            class="w-full px-4 py-2 rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all">
+                    </div>
+                    <div>
+                        <label for="register-email" class="block font-label-md text-on-surface mb-1">Email</label>
+                        <input type="email" id="register-email" name="email" title="Địa chỉ Email"
+                            placeholder="Nhập email"
+                            class="w-full px-4 py-2 rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all">
+                    </div>
+                    <div>
+                        <label for="register-role" class="block font-label-md text-on-surface mb-1">Bạn muốn đăng ký
+                            làm?</label>
+                        <select id="register-role" name="role" title="Chọn vai trò đăng ký"
+                            class="w-full px-4 py-2 rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all bg-white">
+                            <option value="tnv">Tình nguyện viên</option>
+                            <option value="to_chuc">Tổ chức / CLB</option>
+                        </select>
+                    </div>
+                    <button type="submit"
+                        class="mt-4 w-full py-3 bg-primary text-on-primary font-label-bold rounded-lg hover:bg-primary-container transition-colors shadow-md">
+                        Gửi thông tin
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            // Register GSAP Plugins
+            gsap.registerPlugin(ScrollTrigger);
+            gsap.config({ force3D: true });
+
+            // 1. Lenis + GSAP ticker sync (official recommended approach)
+            const lenis = new Lenis({
+                duration: 1.4,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                smoothWheel: true,
+                wheelMultiplier: 1.0,
+            });
+            gsap.ticker.add((time) => lenis.raf(time * 1000));
+            gsap.ticker.lagSmoothing(0);
+
+            // 2. Preloader Logic
+            const tlLoader = gsap.timeline();
+
+            function initPreloader() {
+                const loaderBar = document.getElementById('loader-bar');
+                let progress = 0;
+
+                const interval = setInterval(() => {
+                    progress += Math.random() * 15;
+                    if (progress >= 100) {
+                        progress = 100;
+                        clearInterval(interval);
+                        setTimeout(startPageEntry, 200);
+                    }
+                    if (loaderBar) loaderBar.style.width = progress + '%';
+                }, 150);
+
+                // Force entry after 5 seconds if still stuck
+                setTimeout(() => {
+                    if (document.getElementById('preloader').style.display !== 'none') {
+                        clearInterval(interval);
+                        startPageEntry();
+                    }
+                }, 5000);
+            }
+
+            // Start preloader logic immediately
+            initPreloader();
+
+            function startPageEntry() {
+                if (window.isEntered) return;
+                window.isEntered = true;
+                gsap.killTweensOf(['nav', '#desktop-menu .nav-link', 'h1']);
+
+                tlLoader
+                    .to('#preloader', {
+                        yPercent: -100, duration: 1.2, ease: "power4.inOut",
+                        onComplete: () => { document.getElementById('preloader').style.display = 'none'; }
+                    })
+                    .from('nav', { yPercent: -100, opacity: 0, duration: 1, ease: "power3.out" }, "-=0.5")
+                    .fromTo('#desktop-menu .nav-link',
+                        { y: -20, opacity: 0 },
+                        { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "power3.out" },
+                        "-=0.6"
+                    )
+                    .from('h1', { y: 40, opacity: 0, duration: 1, ease: "power3.out" }, "-=0.9");
+
+                document.body.style.overflow = '';
+                ScrollTrigger.refresh();
+            }
+
+            // 3. Scroll Progress Bar
+            gsap.to('#scroll-progress', {
+                width: '100%',
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: 'body',
+                    start: 'top top',
+                    end: 'bottom bottom',
+                    scrub: 0.3
                 }
             });
-        }, observerOptions);
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const animatedElements = document.querySelectorAll('.reveal');
-            animatedElements.forEach(el => observer.observe(el));
-        });
-    </script>
+            // 4. Set initial hidden state immediately (prevents flash before scroll)
+            function getOffsets(el) {
+                if (el.classList.contains('fade-down')) return { y: -60, x: 0, scale: 1 };
+                if (el.classList.contains('fade-left')) return { y: 0, x: 60, scale: 1 };
+                if (el.classList.contains('fade-right')) return { y: 0, x: -60, scale: 1 };
+                if (el.classList.contains('zoom-in')) return { y: 20, x: 0, scale: 0.92 };
+                return { y: 60, x: 0, scale: 1 }; // default: fade-up
+            }
+
+            const revealElements = document.querySelectorAll('.reveal:not(.moments-grid .reveal)');
+            revealElements.forEach(el => {
+                const { y, x, scale } = getOffsets(el);
+                gsap.set(el, { y, x, scale, opacity: 0, immediateRender: true });
+            });
+
+            ScrollTrigger.batch(revealElements, {
+                onEnter: batch => gsap.to(batch, {
+                    y: 0, x: 0, scale: 1, opacity: 1,
+                    duration: 0.9, stagger: 0.1,
+                    ease: "power2.out", overwrite: true
+                }),
+                start: "top 92%"
+            });
+
+            // 5. Moments Grid — staggered entrance
+            const momentsGrid = document.querySelector('.moments-grid');
+            if (momentsGrid) {
+                const momentCards = momentsGrid.querySelectorAll('.reveal');
+                gsap.set(momentCards, { y: 80, opacity: 0, immediateRender: true });
+                ScrollTrigger.create({
+                    trigger: momentsGrid,
+                    start: 'top 85%',
+                    once: true,
+                    onEnter: () => gsap.to(momentCards, {
+                        y: 0, opacity: 1,
+                        duration: 1.4, stagger: 0.2,
+                        ease: "power3.out"
+                    })
+                });
+            }
+
+            // 6. Parallax blobs (scoped, lightweight)
+            gsap.to('.blob', {
+                y: -120, ease: 'none',
+                scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 2 }
+            });
+
+            // 7. Navigation Active State
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            sections.forEach(section => {
+                ScrollTrigger.create({
+                    trigger: section,
+                    start: "top 20%",
+                    end: "bottom 20%",
+                    onToggle: self => {
+                        if (self.isActive) {
+                            const id = section.getAttribute('id');
+                            navLinks.forEach(link => {
+                                link.classList.remove('text-blue-800', 'dark:text-blue-400', 'font-bold', 'border-b-2', 'border-blue-800', 'dark:border-blue-400');
+                                link.classList.add('text-slate-600', 'dark:text-slate-400', 'font-medium');
+                                if (link.getAttribute('href') === `#${id}`) {
+                                    link.classList.add('text-blue-800', 'dark:text-blue-400', 'font-bold', 'border-b-2', 'border-blue-800', 'dark:border-blue-400');
+                                    link.classList.remove('text-slate-600', 'dark:text-slate-400', 'font-medium');
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+
+            // Mobile Menu
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenuClose = document.getElementById('mobile-menu-close');
+            const mobileMenu = document.getElementById('mobile-menu');
+            let isMenuOpen = false;
+
+            function toggleMobileMenu() {
+                isMenuOpen = !isMenuOpen;
+                if (isMenuOpen) {
+                    gsap.to(mobileMenu, { x: 0, duration: 0.6, ease: "power4.out" });
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    gsap.to(mobileMenu, { x: '100%', duration: 0.6, ease: "power4.in" });
+                    document.body.style.overflow = '';
+                }
+            }
+
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+            mobileMenuClose.addEventListener('click', toggleMobileMenu);
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => isMenuOpen && toggleMobileMenu());
+            });
+
+            // 8. Back to Top
+            const backToTop = document.getElementById('back-to-top');
+            window.addEventListener('scroll', () => {
+                backToTop.classList.toggle('visible', window.scrollY > 500);
+            }, { passive: true });
+            backToTop.addEventListener('click', () => lenis.scrollTo(0, { duration: 1.4 }));
+
+            // 9. Video autoplay
+            const handleVideoState = () => {
+                document.querySelectorAll('video').forEach(v => {
+                    if (v.offsetParent !== null) {
+                        v.play().catch(() => { v.muted = true; v.play().catch(() => { }); });
+                    } else { v.pause(); }
+                });
+            };
+            window.addEventListener('resize', handleVideoState, { passive: true });
+            handleVideoState();
+        </script>
 </body>
 
 </html>
