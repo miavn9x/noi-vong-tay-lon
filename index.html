@@ -50,7 +50,7 @@
                         "container-max": "1400px",
                         "unit": "8px",
                         "margin-mobile": "16px",
-                        "section-padding": "80px",
+                        "section-padding": "60px",
                         "gutter": "24px"
                     },
                     "fontFamily": {
@@ -176,14 +176,7 @@
             z-index: 1000;
         }
 
-        /* Enhanced Reveal */
-        .reveal-text {
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-        }
-
-        .reveal-text span {
-            display: inline-block;
-        }
+        /* Enhanced Reveal — clip-path handled by GSAP */
 
         /* Back to Top Button */
         #back-to-top {
@@ -249,33 +242,6 @@
             }
         }
 
-        .soft-wave {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            overflow: hidden;
-            line-height: 0;
-            z-index: 10;
-        }
-
-        .soft-wave svg {
-            position: relative;
-            display: block;
-            width: calc(100% + 2px);
-            /* Slightly more than 100% */
-            height: 80px;
-            margin-bottom: -1px;
-            /* Force overlap */
-            transform: scale(1.01);
-            /* Small scale to fix sub-pixel gaps */
-        }
-
-        .soft-wave .shape-fill {
-            fill: #ffffff;
-            shape-rendering: geometricPrecision;
-        }
-
         /* Floating Decorative Lines */
         .bg-line {
             position: absolute;
@@ -322,33 +288,6 @@
             /* Increased visibility */
         }
 
-        .soft-wave-top {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            overflow: hidden;
-            line-height: 0;
-            transform: rotate(180deg);
-            z-index: 10;
-        }
-
-        .soft-wave-top svg {
-            position: relative;
-            display: block;
-            width: calc(100% + 2px);
-            height: 60px;
-            margin-top: -1px;
-            /* Overlap with section above */
-            transform: scale(1.01);
-        }
-
-        .soft-wave-top .shape-fill {
-            fill: #ffffff;
-            /* Must match the white section above */
-            shape-rendering: geometricPrecision;
-        }
-
         /* Shine Sweep Effect */
         .shine-sweep {
             position: relative;
@@ -374,6 +313,135 @@
             left: 120%;
             opacity: 1;
         }
+
+        /* ──────────────────────────────────────────────
+           Button Premium Effects
+           - Shimmer: subtle gradient drift (constant)
+           - Pulse ring: expanding shadow ring (constant)
+           - Shine sweep: light beam on hover
+        ────────────────────────────────────────────── */
+
+        @keyframes btn-shimmer {
+            0%   { background-position: 200% center; }
+            100% { background-position: -200% center; }
+        }
+
+        /* ─ Primary Button (bg-primary) ───────────────────────────── */
+        .btn-primary-glow {
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+        /* Continuous inner shimmer */
+        .btn-primary-glow::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                105deg,
+                transparent 20%,
+                rgba(255,255,255,0.12) 50%,
+                transparent 80%
+            );
+            background-size: 200% 100%;
+            animation: btn-shimmer 3.5s linear infinite;
+            pointer-events: none;
+            border-radius: inherit;
+        }
+        /* Hover shine sweep */
+        .btn-primary-glow::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -120%;
+            width: 60%; height: 100%;
+            background: linear-gradient(
+                105deg,
+                transparent,
+                rgba(255,255,255,0.45),
+                transparent
+            );
+            transform: skewX(-18deg);
+            transition: left 0.55s ease;
+            pointer-events: none;
+        }
+        .btn-primary-glow:hover::after { left: 160%; }
+
+        /* ─ Outline Button ───────────────────────────────────── */
+        .btn-outline-glow {
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+        .btn-outline-glow::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                105deg,
+                transparent 20%,
+                rgba(0,45,112,0.07) 50%,
+                transparent 80%
+            );
+            background-size: 200% 100%;
+            animation: btn-shimmer 4s linear infinite;
+            animation-delay: 1.4s;
+            pointer-events: none;
+            border-radius: inherit;
+        }
+        .btn-outline-glow::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -120%;
+            width: 60%; height: 100%;
+            background: linear-gradient(
+                105deg,
+                transparent,
+                rgba(0,45,112,0.15),
+                transparent
+            );
+            transform: skewX(-18deg);
+            transition: left 0.55s ease;
+            pointer-events: none;
+        }
+        .btn-outline-glow:hover::after { left: 160%; }
+
+        /* ─ White Button on Blue bg (footer CTA) ────────────────── */
+        .btn-white-glow {
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+        .btn-white-glow::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                105deg,
+                transparent 20%,
+                rgba(255,255,255,0.18) 50%,
+                transparent 80%
+            );
+            background-size: 200% 100%;
+            animation: btn-shimmer 3.5s linear infinite;
+            pointer-events: none;
+            border-radius: inherit;
+        }
+        .btn-white-glow::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -120%;
+            width: 60%; height: 100%;
+            background: linear-gradient(
+                105deg,
+                transparent,
+                rgba(255,255,255,0.55),
+                transparent
+            );
+            transform: skewX(-18deg);
+            transition: left 0.55s ease;
+            pointer-events: none;
+        }
+        .btn-white-glow:hover::after { left: 160%; }
     </style>
 </head>
 
@@ -424,11 +492,11 @@
                 <div class="hidden lg:flex gap-4">
                     <button
                         onclick="document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
-                        class="px-4 py-2 font-label-bold text-label-bold text-primary border-2 border-primary rounded-lg hover:bg-surface-container transition-colors">Dành
+                        class="btn-outline-glow px-4 py-2 font-label-bold text-label-bold text-primary border-2 border-primary rounded-lg hover:bg-surface-container transition-colors">Dầnh
                         cho tổ chức</button>
                     <button
                         onclick="document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
-                        class="px-6 py-2 bg-primary text-on-primary font-label-bold text-label-bold rounded-lg hover:bg-primary-container transition-colors shadow-md">Tham
+                        class="btn-primary-glow px-6 py-2 bg-primary text-on-primary font-label-bold text-label-bold rounded-lg hover:bg-primary-container transition-colors shadow-md">Tham
                         gia ngay</button>
                 </div>
 
@@ -444,7 +512,7 @@
 
     <!-- Mobile Menu Drawer (Direct child of body to avoid nav clipping) -->
     <div id="mobile-menu"
-        class="fixed inset-0 bg-white dark:bg-slate-900 z-[100] translate-x-full transition-transform duration-500 ease-in-out md:hidden flex flex-col overflow-y-auto">
+        class="fixed inset-0 bg-white dark:bg-slate-900 z-[100] translate-x-full md:hidden flex flex-col overflow-y-auto">
         <!-- Mobile Menu Header -->
         <div
             class="flex justify-between items-center h-20 px-6 border-b border-slate-100 dark:border-slate-800 shrink-0">
@@ -473,11 +541,11 @@
             <div class="mt-8 flex flex-col gap-4 px-4">
                 <button
                     onclick="toggleMobileMenu(); document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
-                    class="w-full py-4 bg-primary text-white font-bold rounded-xl shadow-lg active:scale-95 transition-transform">Tham
+                    class="btn-primary-glow w-full py-4 bg-primary text-white font-bold rounded-xl shadow-lg active:scale-95">Tham
                     gia ngay</button>
                 <button
                     onclick="toggleMobileMenu(); document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
-                    class="w-full py-4 bg-white text-primary border-2 border-primary font-bold rounded-xl active:scale-95 transition-transform">Dành
+                    class="btn-outline-glow w-full py-4 bg-white text-primary border-2 border-primary font-bold rounded-xl active:scale-95">Dành
                     cho tổ chức</button>
             </div>
         </div>
@@ -521,11 +589,11 @@
                     <div class="flex justify-center gap-4 mt-4">
                         <button
                             onclick="document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
-                            class="px-8 py-3 bg-primary text-on-primary font-label-bold text-label-bold rounded-lg hover:bg-primary-container transition-colors shadow-[0px_8px_30px_rgba(0,66,157,0.2)]">Tìm
+                            class="btn-primary-glow px-8 py-3 bg-primary text-on-primary font-label-bold text-label-bold rounded-lg hover:bg-primary-container transition-colors shadow-[0px_8px_30px_rgba(0,66,157,0.2)]">Tìm
                             dự án ngay</button>
                         <button
                             onclick="document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
-                            class="px-8 py-3 bg-white text-primary font-label-bold text-label-bold border border-outline-variant rounded-lg hover:bg-surface-container-low transition-colors">Đăng
+                            class="btn-outline-glow px-8 py-3 bg-white text-primary font-label-bold text-label-bold border border-outline-variant rounded-lg hover:bg-surface-container-low transition-colors">Đăng
                             dự án</button>
                     </div>
                 </div>
@@ -592,7 +660,7 @@
 
     </section>
     <!-- Mission Section -->
-    <section class="py-section-padding px-6 md:px-12 bg-white relative overflow-hidden" id="su-menh">
+    <section class="py-section-padding px-4 bg-white relative overflow-hidden" id="su-menh">
         <!-- Creative Background Elements -->
         <div class="absolute inset-0 bg-dots pointer-events-none"></div>
         <div class="blob w-[600px] h-[600px] bg-primary/5 top-[-10%] left-[-10%] blur-[120px]"></div>
@@ -629,10 +697,10 @@
                 </div>
                 <div class="reveal fade-left relative">
                     <div
-                        class="relative rounded-[32px] overflow-hidden shadow-[0px_40px_80px_rgba(0,66,157,0.15)] z-10 group border-4 border-white transition-all duration-500 hover:shadow-[0px_60px_100px_rgba(0,66,157,0.25)] hover:-translate-y-2">
+                        class="mission-card-wrap relative rounded-[32px] overflow-hidden shadow-[0px_40px_80px_rgba(0,66,157,0.15)] z-10 group border-4 border-white">
                         <div class="shine-sweep w-full h-full">
                             <img src="./img/Sứ mệnh của chúng tôi.JPG" alt="Sứ mệnh ULIS Volunteer Connect"
-                                class="w-full h-full object-cover aspect-[4/3] group-hover:scale-105 transition-transform duration-1000">
+                                class="mission-img-el w-full h-full object-cover aspect-[4/3]">
                         </div>
                     </div>
                     <!-- Creative highlights -->
@@ -933,15 +1001,7 @@
                         trị tích cực.”</p>
                 </div>
             </div>
-            <style>
-                .hide-scrollbar::-webkit-scrollbar {
-                    display: none;
-                }
 
-                .hide-scrollbar {
-                    -ms-overflow-style: none;
-                }
-            </style>
         </div>
     </section>
     <!-- Moments Section -->
@@ -972,11 +1032,10 @@
             <div class="moments-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
                 <!-- Moment Card 1 -->
                 <div
-                    class="reveal fade-up group bg-white rounded-[32px] overflow-hidden shadow-[0px_20px_50px_rgba(0,0,0,0.04)] hover:shadow-[0px_30px_70px_rgba(0,66,157,0.15)] transition-all duration-500 border border-surface-container flex flex-col hover:-translate-y-2">
+                    class="moment-card group bg-white rounded-[32px] overflow-hidden border border-surface-container flex flex-col">
                     <div class="relative">
                         <div class="w-full aspect-[4/3] relative overflow-hidden rounded-t-[32px] isolate">
-                            <img alt="Khoảnh khắc tình nguyện mùa hè xanh"
-                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                            <img alt="Khoảnh khắc tình nguyện mùa hè xanh" class="moment-img w-full h-full object-cover"
                                 src="./img/unnamed (1).jpg" />
                             <div class="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent">
                             </div>
@@ -1017,11 +1076,10 @@
 
                 <!-- Moment Card 2 -->
                 <div
-                    class="reveal fade-up delay-200 group bg-white rounded-[32px] overflow-hidden shadow-[0px_20px_50px_rgba(0,0,0,0.04)] hover:shadow-[0px_30px_70px_rgba(0,66,157,0.15)] transition-all duration-500 border border-surface-container flex flex-col hover:-translate-y-2">
+                    class="moment-card group bg-white rounded-[32px] overflow-hidden border border-surface-container flex flex-col">
                     <div class="relative">
                         <div class="w-full aspect-[4/3] relative overflow-hidden rounded-t-[32px] isolate">
-                            <img alt="Khoảnh khắc thắp sáng đường quê"
-                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                            <img alt="Khoảnh khắc thắp sáng đường quê" class="moment-img w-full h-full object-cover"
                                 src="./img/1-1722055423.jpg" />
                             <div class="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent">
                             </div>
@@ -1064,12 +1122,11 @@
 
                 <!-- Moment Card 3 -->
                 <div
-                    class="reveal fade-up delay-400 group bg-white rounded-[32px] overflow-hidden shadow-[0px_20px_50px_rgba(0,0,0,0.04)] hover:shadow-[0px_30px_70px_rgba(0,66,157,0.15)] transition-all duration-500 border border-surface-container flex flex-col hover:-translate-y-2">
+                    class="moment-card group bg-white rounded-[32px] overflow-hidden border border-surface-container flex flex-col">
                     <div class="relative">
                         <div class="w-full aspect-[4/3] relative overflow-hidden rounded-t-[32px] isolate">
                             <img alt="Khoảnh khắc chương trình mùa đông ấm"
-                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
-                                src="./img/images.jpg" />
+                                class="moment-img w-full h-full object-cover" src="./img/images.jpg" />
                             <div class="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent">
                             </div>
                         </div>
@@ -1130,11 +1187,11 @@
                 <div class="reveal fade-up delay-400 flex flex-col sm:flex-row gap-4 justify-center">
                     <button
                         onclick="document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
-                        class="px-8 py-4 bg-white text-primary font-label-bold text-label-bold rounded-lg hover:bg-surface-container-low transition-colors shadow-lg">Đăng
+                        class="btn-white-glow px-8 py-4 bg-white text-primary font-label-bold text-label-bold rounded-lg hover:bg-surface-container-low transition-colors shadow-lg">Đăng
                         ký tài khoản tổ chức</button>
                     <button
                         onclick="document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
-                        class="px-8 py-4 bg-transparent text-white font-label-bold text-label-bold border border-white/30 rounded-lg hover:bg-white/10 transition-colors">Tạo
+                        class="btn-white-glow px-8 py-4 bg-transparent text-white font-label-bold text-label-bold border border-white/30 rounded-lg hover:bg-white/10 transition-colors">Tạo
                         tài khoản tổ chức</button>
                 </div>
             </div>
@@ -1300,7 +1357,7 @@
         <div id="register-modal"
             class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 backdrop-blur-sm px-4">
             <div
-                class="bg-surface w-full max-w-md rounded-2xl p-6 md:p-8 shadow-2xl relative animate-[fade-up_0.3s_ease-out]">
+                class="bg-surface w-full max-w-md rounded-2xl p-6 md:p-8 shadow-2xl relative" id="register-modal-inner">
                 <button
                     onclick="document.getElementById('register-modal').classList.remove('flex'); document.getElementById('register-modal').classList.add('hidden');"
                     class="absolute top-4 right-4 text-on-surface-variant hover:text-on-surface transition-colors">
@@ -1351,38 +1408,35 @@
         </div>
 
         <script>
-            // Register GSAP Plugins
+            // ─── Setup ───────────────────────────────────────────────────
             gsap.registerPlugin(ScrollTrigger);
             gsap.config({ force3D: true });
 
-            // 1. Lenis + GSAP ticker sync (official recommended approach)
+            // 1. Lenis smooth scroll synced with GSAP ticker
             const lenis = new Lenis({
-                duration: 1.4,
+                duration: 1.6,
                 easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
                 smoothWheel: true,
-                wheelMultiplier: 1.0,
+                wheelMultiplier: 0.9,
             });
             gsap.ticker.add((time) => lenis.raf(time * 1000));
             gsap.ticker.lagSmoothing(0);
 
-            // 2. Preloader Logic
+            // ─── Preloader ───────────────────────────────────────────────
             const tlLoader = gsap.timeline();
 
             function initPreloader() {
                 const loaderBar = document.getElementById('loader-bar');
                 let progress = 0;
-
                 const interval = setInterval(() => {
-                    progress += Math.random() * 15;
+                    progress += Math.random() * 12 + 3;
                     if (progress >= 100) {
                         progress = 100;
                         clearInterval(interval);
-                        setTimeout(startPageEntry, 200);
+                        setTimeout(startPageEntry, 250);
                     }
                     if (loaderBar) loaderBar.style.width = progress + '%';
-                }, 150);
-
-                // Force entry after 5 seconds if still stuck
+                }, 120);
                 setTimeout(() => {
                     if (document.getElementById('preloader').style.display !== 'none') {
                         clearInterval(interval);
@@ -1390,8 +1444,6 @@
                     }
                 }, 5000);
             }
-
-            // Start preloader logic immediately
             initPreloader();
 
             function startPageEntry() {
@@ -1401,40 +1453,34 @@
 
                 tlLoader
                     .to('#preloader', {
-                        yPercent: -100, duration: 1.2, ease: "power4.inOut",
+                        yPercent: -100, duration: 1.4, ease: 'expo.inOut',
                         onComplete: () => { document.getElementById('preloader').style.display = 'none'; }
                     })
-                    .from('nav', { yPercent: -100, opacity: 0, duration: 1, ease: "power3.out" }, "-=0.5")
+                    .from('nav', { yPercent: -100, opacity: 0, duration: 0.9, ease: 'power4.out' }, '-=0.5')
                     .fromTo('#desktop-menu .nav-link',
-                        { y: -20, opacity: 0 },
-                        { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "power3.out" },
-                        "-=0.6"
+                        { y: -16, opacity: 0 },
+                        { y: 0, opacity: 1, stagger: 0.08, duration: 0.7, ease: 'power3.out' },
+                        '-=0.5'
                     )
-                    .from('h1', { y: 40, opacity: 0, duration: 1, ease: "power3.out" }, "-=0.9");
+                    .from('h1', { y: 50, opacity: 0, duration: 1.1, ease: 'power4.out' }, '-=0.8');
 
                 document.body.style.overflow = '';
                 ScrollTrigger.refresh();
             }
 
-            // 3. Scroll Progress Bar
+            // ─── Scroll Progress Bar ─────────────────────────────────────
             gsap.to('#scroll-progress', {
-                width: '100%',
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: 'body',
-                    start: 'top top',
-                    end: 'bottom bottom',
-                    scrub: 0.3
-                }
+                width: '100%', ease: 'none',
+                scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 0.2 }
             });
 
-            // 4. Set initial hidden state immediately (prevents flash before scroll)
+            // ─── Scroll Reveal ───────────────────────────────────────────
             function getOffsets(el) {
-                if (el.classList.contains('fade-down')) return { y: -60, x: 0, scale: 1 };
-                if (el.classList.contains('fade-left')) return { y: 0, x: 60, scale: 1 };
-                if (el.classList.contains('fade-right')) return { y: 0, x: -60, scale: 1 };
-                if (el.classList.contains('zoom-in')) return { y: 20, x: 0, scale: 0.92 };
-                return { y: 60, x: 0, scale: 1 }; // default: fade-up
+                if (el.classList.contains('fade-down')) return { y: -50, x: 0, scale: 1 };
+                if (el.classList.contains('fade-left')) return { y: 0, x: 70, scale: 1 };
+                if (el.classList.contains('fade-right')) return { y: 0, x: -70, scale: 1 };
+                if (el.classList.contains('zoom-in')) return { y: 24, x: 0, scale: 0.94 };
+                return { y: 50, x: 0, scale: 1 }; // fade-up default
             }
 
             const revealElements = document.querySelectorAll('.reveal:not(.moments-grid .reveal)');
@@ -1446,44 +1492,185 @@
             ScrollTrigger.batch(revealElements, {
                 onEnter: batch => gsap.to(batch, {
                     y: 0, x: 0, scale: 1, opacity: 1,
-                    duration: 0.9, stagger: 0.1,
-                    ease: "power2.out", overwrite: true
+                    duration: 1.0, stagger: 0.12,
+                    ease: 'power3.out', overwrite: true
                 }),
-                start: "top 92%"
+                start: 'top 90%'
             });
 
-            // 5. Moments Grid — staggered entrance
-            const momentsGrid = document.querySelector('.moments-grid');
-            if (momentsGrid) {
-                const momentCards = momentsGrid.querySelectorAll('.reveal');
-                gsap.set(momentCards, { y: 80, opacity: 0, immediateRender: true });
-                ScrollTrigger.create({
-                    trigger: momentsGrid,
-                    start: 'top 85%',
-                    once: true,
-                    onEnter: () => gsap.to(momentCards, {
-                        y: 0, opacity: 1,
-                        duration: 1.4, stagger: 0.2,
-                        ease: "power3.out"
-                    })
+            // ─── Moments Grid — premium GSAP animation ───────────────────
+            const momentCards = document.querySelectorAll('.moment-card');
+            const shadowDefault = '0px 20px 50px rgba(0,0,0,0.04)';
+            const shadowHover = '0px 40px 80px rgba(0,66,157,0.18)';
+
+            // Initial state
+            gsap.set(momentCards, {
+                opacity: 0,
+                y: 70,
+                scale: 0.97,
+                boxShadow: shadowDefault,
+                immediateRender: true
+            });
+
+            // Entrance: staggered cascade with scale + fade
+            ScrollTrigger.create({
+                trigger: '.moments-grid',
+                start: 'top 86%',
+                once: true,
+                onEnter: () => {
+                    gsap.to(momentCards, {
+                        opacity: 1, y: 0, scale: 1,
+                        boxShadow: shadowDefault,
+                        duration: 1.1,
+                        stagger: { each: 0.2, ease: 'power2.inOut' },
+                        ease: 'power3.out'
+                    });
+                }
+            });
+
+            // Hover: GSAP-powered lift + shadow + image zoom + badge glow
+            momentCards.forEach(card => {
+                const img = card.querySelector('.moment-img');
+                const badge = card.querySelector('.backdrop-blur-md');
+
+                card.addEventListener('mouseenter', () => {
+                    gsap.to(card, { y: -10, scale: 1.012, boxShadow: shadowHover, duration: 0.45, ease: 'power2.out' });
+                    gsap.to(img, { scale: 1.08, duration: 0.8, ease: 'power2.out' });
+                    if (badge) gsap.to(badge, { y: -3, duration: 0.4, ease: 'power2.out' });
+                });
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(card, { y: 0, scale: 1, boxShadow: shadowDefault, duration: 0.6, ease: 'elastic.out(1, 0.55)' });
+                    gsap.to(img, { scale: 1, duration: 0.7, ease: 'power2.inOut' });
+                    if (badge) gsap.to(badge, { y: 0, duration: 0.5, ease: 'elastic.out(1, 0.6)' });
+                });
+
+                // Subtle scroll parallax on each image
+                if (img) {
+                    gsap.to(img, {
+                        y: -18, ease: 'none',
+                        scrollTrigger: {
+                            trigger: card,
+                            start: 'top bottom',
+                            end: 'bottom top',
+                            scrub: 1.5
+                        }
+                    });
+                }
+            });
+
+            // ─── Counter Animation for Stats ─────────────────────────────
+            function animateCounter(el, target, suffix) {
+                gsap.fromTo({ val: 0 }, { val: target }, {
+                    val: target, duration: 2, ease: 'power2.out',
+                    scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+                    onUpdate: function () {
+                        el.textContent = Math.round(this.targets()[0].val) + suffix;
+                    }
+                });
+            }
+            // Auto-detect stat elements by content pattern
+            document.querySelectorAll('.text-h2.text-primary').forEach(el => {
+                const text = el.textContent.trim();
+                const match = text.match(/(\d+)(\+?)(.*)/);
+                if (match) {
+                    const num = parseInt(match[1]);
+                    const suffix = match[2] + match[3];
+                    const original = el.textContent;
+                    el.dataset.counterTarget = num;
+                    el.dataset.counterSuffix = suffix;
+                    ScrollTrigger.create({
+                        trigger: el, start: 'top 90%', once: true,
+                        onEnter: () => {
+                            const obj = { v: 0 };
+                            gsap.to(obj, {
+                                v: num, duration: 1.8, ease: 'power2.out',
+                                onUpdate: () => { el.textContent = Math.round(obj.v) + suffix; },
+                                onComplete: () => { el.textContent = original; }
+                            });
+                        }
+                    });
+                }
+            });
+
+            // ─── Parallax blobs ──────────────────────────────────────────
+            gsap.to('.blob', {
+                y: -80, ease: 'none',
+                scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 3 }
+            });
+
+            // ─── GSAP hover: mission section image ───────────────────────
+            const missionWrap = document.querySelector('.mission-card-wrap');
+            const missionImg  = document.querySelector('.mission-img-el');
+            if (missionWrap) {
+                const missionShadowDef = '0px 40px 80px rgba(0,66,157,0.15)';
+                const missionShadowHov = '0px 60px 100px rgba(0,66,157,0.28)';
+                missionWrap.addEventListener('mouseenter', () => {
+                    gsap.to(missionWrap, { y: -10, scale: 1.015, boxShadow: missionShadowHov, duration: 0.5, ease: 'power2.out' });
+                    if (missionImg) gsap.to(missionImg, { scale: 1.06, duration: 0.9, ease: 'power2.out' });
+                });
+                missionWrap.addEventListener('mouseleave', () => {
+                    gsap.to(missionWrap, { y: 0, scale: 1, boxShadow: missionShadowDef, duration: 0.65, ease: 'elastic.out(1, 0.55)' });
+                    if (missionImg) gsap.to(missionImg, { scale: 1, duration: 0.7, ease: 'power2.inOut' });
                 });
             }
 
-            // 6. Parallax blobs (scoped, lightweight)
-            gsap.to('.blob', {
-                y: -120, ease: 'none',
-                scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 2 }
+            // ─── Hover micro-interactions for feature/review cards ───────
+            // Use attribute selector with correct escape (no double-escape in attribute value)
+            document.querySelectorAll('.hover\\:shadow-md, [class*="hover:shadow-["]').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    gsap.to(card, { y: -6, duration: 0.35, ease: 'power2.out' });
+                });
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(card, { y: 0, duration: 0.5, ease: 'elastic.out(1, 0.6)' });
+                });
             });
 
-            // 7. Navigation Active State
+            // ─── Modal GSAP open/close ───────────────────────────────────
+            function openModal() {
+                const modal  = document.getElementById('register-modal');
+                const inner  = document.getElementById('register-modal-inner');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                gsap.fromTo(inner,
+                    { y: 40, opacity: 0, scale: 0.96 },
+                    { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: 'power3.out' }
+                );
+            }
+            function closeModal() {
+                const modal  = document.getElementById('register-modal');
+                const inner  = document.getElementById('register-modal-inner');
+                gsap.to(inner, {
+                    y: 20, opacity: 0, scale: 0.97, duration: 0.35, ease: 'power2.in',
+                    onComplete: () => { modal.classList.remove('flex'); modal.classList.add('hidden'); }
+                });
+            }
+            // Replace inline onclick with GSAP-controlled open/close
+            document.querySelectorAll('[onclick*="register-modal"]').forEach(btn => {
+                const orig = btn.getAttribute('onclick');
+                btn.removeAttribute('onclick');
+                if (orig.includes('remove') && orig.includes('hidden')) {
+                    btn.addEventListener('click', openModal);
+                } else {
+                    btn.addEventListener('click', closeModal);
+                }
+            });
+            // Close on backdrop click
+            document.getElementById('register-modal').addEventListener('click', function(e) {
+                if (e.target === this) closeModal();
+            });
+            // Close on Escape key
+            document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+
+            // ─── Navigation Active State ─────────────────────────────────
             const sections = document.querySelectorAll('section[id]');
             const navLinks = document.querySelectorAll('.nav-link');
 
             sections.forEach(section => {
                 ScrollTrigger.create({
                     trigger: section,
-                    start: "top 20%",
-                    end: "bottom 20%",
+                    start: 'top 25%',
+                    end: 'bottom 25%',
                     onToggle: self => {
                         if (self.isActive) {
                             const id = section.getAttribute('id');
@@ -1500,7 +1687,7 @@
                 });
             });
 
-            // Mobile Menu
+            // ─── Mobile Menu ─────────────────────────────────────────────
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
             const mobileMenuClose = document.getElementById('mobile-menu-close');
             const mobileMenu = document.getElementById('mobile-menu');
@@ -1509,10 +1696,15 @@
             function toggleMobileMenu() {
                 isMenuOpen = !isMenuOpen;
                 if (isMenuOpen) {
-                    gsap.to(mobileMenu, { x: 0, duration: 0.6, ease: "power4.out" });
+                    gsap.to(mobileMenu, { x: 0, duration: 0.55, ease: 'power4.out' });
+                    // Stagger menu items entrance
+                    gsap.fromTo(mobileMenu.querySelectorAll('a, button'),
+                        { x: 30, opacity: 0 },
+                        { x: 0, opacity: 1, stagger: 0.05, duration: 0.4, ease: 'power3.out', delay: 0.2 }
+                    );
                     document.body.style.overflow = 'hidden';
                 } else {
-                    gsap.to(mobileMenu, { x: '100%', duration: 0.6, ease: "power4.in" });
+                    gsap.to(mobileMenu, { x: '100%', duration: 0.5, ease: 'power4.in' });
                     document.body.style.overflow = '';
                 }
             }
@@ -1523,14 +1715,14 @@
                 link.addEventListener('click', () => isMenuOpen && toggleMobileMenu());
             });
 
-            // 8. Back to Top
+            // ─── Back to Top ─────────────────────────────────────────────
             const backToTop = document.getElementById('back-to-top');
             window.addEventListener('scroll', () => {
                 backToTop.classList.toggle('visible', window.scrollY > 500);
             }, { passive: true });
-            backToTop.addEventListener('click', () => lenis.scrollTo(0, { duration: 1.4 }));
+            backToTop.addEventListener('click', () => lenis.scrollTo(0, { duration: 1.6 }));
 
-            // 9. Video autoplay
+            // ─── Video autoplay ───────────────────────────────────────────
             const handleVideoState = () => {
                 document.querySelectorAll('video').forEach(v => {
                     if (v.offsetParent !== null) {
