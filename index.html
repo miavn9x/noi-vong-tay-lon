@@ -5,7 +5,11 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta name="description" content="Nền tảng kết nối sinh viên tình nguyện ULIS và các tổ chức" />
+    <meta name="keywords" content="tình nguyện, ULIS, sinh viên" />
+
     <title>ULIS Volunteer Connect - Kết nối Tình nguyện viên và Tổ chức</title>
+    <link rel="icon" type="image/png" href="./img/Logo-new.png" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
@@ -548,15 +552,15 @@
     <nav
         class="fixed top-0 w-full z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md font-['Public_Sans'] antialiased border-b border-slate-100 dark:border-slate-800 shadow-sm">
         <div class="flex justify-between items-center h-20 px-6 md:px-12 max-w-screen-2xl mx-auto">
-            <div class="flex items-center gap-3">
-                <img src="./img/logo.png" alt="ULIS Volunteer Connect Logo" class="h-12 w-auto">
+            <a href="#" aria-label="Trang chủ ULIS Volunteer Connect" class="flex items-center gap-3 hover:opacity-90 transition-opacity">
+                <img src="./img/Logo-new.png" alt="ULIS Volunteer Connect Logo" class="h-12 w-auto">
                 <div class="text-xl font-black tracking-tight text-blue-800 dark:text-blue-100">
                     ULIS Volunteer Connect
                 </div>
-            </div>
+            </a>
 
             <!-- Desktop Menu -->
-            <div id="desktop-menu" class="hidden md:flex gap-8 items-center h-full">
+            <div id="desktop-menu" role="navigation" aria-label="Main Navigation" class="hidden md:flex gap-8 items-center h-full">
                 <a class="nav-link h-full flex items-center text-blue-800 dark:text-blue-400 font-bold border-b-2 border-blue-800 dark:border-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-200"
                     href="#">Trang chủ</a>
                 <a class="nav-link h-full flex items-center text-slate-600 dark:text-slate-400 font-medium hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-200"
@@ -574,7 +578,7 @@
                 <div class="hidden lg:flex gap-4">
                     <button
                         onclick="document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
-                        class="btn-outline-glow px-4 py-2 font-label-bold text-label-bold text-primary border-2 border-primary rounded-lg hover:bg-surface-container transition-colors">Dầnh
+                        class="btn-outline-glow px-4 py-2 font-label-bold text-label-bold text-primary border-2 border-primary rounded-lg hover:bg-surface-container transition-colors">Dành
                         cho tổ chức</button>
                     <button
                         onclick="document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
@@ -583,7 +587,7 @@
                 </div>
 
                 <!-- Hamburger Button -->
-                <button id="mobile-menu-btn"
+                <button id="mobile-menu-btn" aria-label="Mở menu điều hướng"
                     class="md:hidden flex items-center justify-center w-10 h-10 text-primary dark:text-white focus:outline-none transition-transform active:scale-90">
                     <span class="material-symbols-outlined text-[32px]">menu</span>
                 </button>
@@ -599,7 +603,7 @@
         <div
             class="flex justify-between items-center h-20 px-6 border-b border-slate-100 dark:border-slate-800 shrink-0">
             <div class="flex items-center gap-3">
-                <img src="./img/logo.png" alt="Logo" class="h-10 w-auto">
+                <img src="./img/Logo-new.png" alt="Logo" class="h-10 w-auto">
                 <div class="text-xl font-black text-primary dark:text-blue-100">ULIS Volunteer Connect</div>
             </div>
             <button id="mobile-menu-close" class="text-primary dark:text-white p-2">
@@ -1208,7 +1212,8 @@
                     <div class="relative">
                         <div class="w-full aspect-[4/3] relative overflow-hidden rounded-t-[32px] isolate">
                             <img alt="Khoảnh khắc chương trình mùa đông ấm"
-                                class="moment-img w-full h-full object-cover" src="./img/images.jpg" />
+                                class="moment-img w-full h-full object-cover"                                 
+                                src="./img/images.webp" />
                             <div class="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent">
                             </div>
                         </div>
