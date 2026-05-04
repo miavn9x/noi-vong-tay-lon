@@ -577,11 +577,11 @@
             <div class="flex items-center gap-4">
                 <div class="hidden lg:flex gap-4">
                     <button
-                        onclick="document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
-                        class="btn-outline-glow px-4 py-2 font-label-bold text-label-bold text-primary border-2 border-primary rounded-lg hover:bg-surface-container transition-colors">Đăng ký tài khoản tổ chức</button>
+                        data-modal-target="register-org-modal"
+                        class="btn-outline-glow px-4 py-2 font-label-bold text-label-bold text-primary border-2 border-primary rounded-lg hover:bg-surface-container transition-colors modal-trigger">Đăng ký tài khoản tổ chức</button>
                     <button
-                        onclick="document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
-                        class="btn-primary-glow px-6 py-2 bg-primary text-on-primary font-label-bold text-label-bold rounded-lg hover:bg-primary-container transition-colors shadow-md">Đăng kí tài khoản tình nguyện viên</button>
+                        data-modal-target="register-vol-modal"
+                        class="btn-primary-glow px-6 py-2 bg-primary text-on-primary font-label-bold text-label-bold rounded-lg hover:bg-primary-container transition-colors shadow-md modal-trigger">Đăng kí tài khoản tình nguyện viên</button>
                 </div>
 
                 <!-- Hamburger Button -->
@@ -624,12 +624,12 @@
 
             <div class="mt-8 flex flex-col gap-4 px-4">
                    <button
-                    onclick="toggleMobileMenu(); document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
-                    class="btn-outline-glow w-full py-4 bg-white text-primary border-2 border-primary font-bold rounded-xl active:scale-95">Đăng ký tài khoản tổ chức
+                    onclick="toggleMobileMenu();" data-modal-target="register-org-modal"
+                    class="btn-outline-glow w-full py-4 bg-white text-primary border-2 border-primary font-bold rounded-xl active:scale-95 modal-trigger">Đăng ký tài khoản tổ chức
                 </button>
                 <button
-                    onclick="toggleMobileMenu(); document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
-                    class="btn-primary-glow w-full py-4 bg-primary text-white font-bold rounded-xl shadow-lg active:scale-95">Đăng kí tài khoản tình nguyện viên
+                    onclick="toggleMobileMenu();" data-modal-target="register-vol-modal"
+                    class="btn-primary-glow w-full py-4 bg-primary text-white font-bold rounded-xl shadow-lg active:scale-95 modal-trigger">Đăng kí tài khoản tình nguyện viên
                 </button>
              
             </div>
@@ -673,12 +673,12 @@
                         khóa.</p>
                     <div class="flex justify-center gap-4 mt-4">
                         <button
-                            onclick="document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
-                            class="btn-primary-glow px-8 py-3 bg-primary text-on-primary font-label-bold text-label-bold rounded-lg hover:bg-primary-container transition-colors shadow-[0px_8px_30px_rgba(0,66,157,0.2)]">Tìm
+                            data-modal-target="register-vol-modal"
+                            class="btn-primary-glow px-8 py-3 bg-primary text-on-primary font-label-bold text-label-bold rounded-lg hover:bg-primary-container transition-colors shadow-[0px_8px_30px_rgba(0,66,157,0.2)] modal-trigger">Tìm
                             dự án ngay</button>
                         <button
-                            onclick="document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
-                            class="btn-outline-glow px-8 py-3 bg-white text-primary font-label-bold text-label-bold border border-outline-variant rounded-lg hover:bg-surface-container-low transition-colors">Đăng
+                            data-modal-target="register-org-modal"
+                            class="btn-outline-glow px-8 py-3 bg-white text-primary font-label-bold text-label-bold border border-outline-variant rounded-lg hover:bg-surface-container-low transition-colors modal-trigger">Đăng
                             dự án</button>
                     </div>
                 </div>
@@ -1272,12 +1272,12 @@
                     cần bạn bắt đầu, mọi bước đi đều có ý nghĩa.</p>
                 <div class="reveal fade-up delay-400 flex flex-col sm:flex-row gap-4 justify-center">
                     <button
-                        onclick="document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
-                        class="btn-white-glow px-8 py-4 bg-white text-primary font-label-bold text-label-bold rounded-lg hover:bg-surface-container-low transition-colors shadow-lg">Đăng
+                        data-modal-target="register-org-modal"
+                        class="btn-white-glow px-8 py-4 bg-white text-primary font-label-bold text-label-bold rounded-lg hover:bg-surface-container-low transition-colors shadow-lg modal-trigger">Đăng
                         ký tài khoản tổ chức</button>
                     <button
-                        onclick="document.getElementById('register-modal').classList.remove('hidden'); document.getElementById('register-modal').classList.add('flex');"
-                        class="btn-white-glow px-8 py-4 bg-transparent text-white font-label-bold text-label-bold border border-white/30 rounded-lg hover:bg-white/10 transition-colors">Đăng kí tài khoản tình nguyện viên</button>
+                        data-modal-target="register-vol-modal"
+                        class="btn-white-glow px-8 py-4 bg-transparent text-white font-label-bold text-label-bold border border-white/30 rounded-lg hover:bg-white/10 transition-colors modal-trigger">Đăng kí tài khoản tình nguyện viên</button>
                 </div>
             </div>
             <!-- Decorative circle -->
@@ -1438,63 +1438,62 @@
                 </div>
             </div>
         </div>
-        <!-- Registration Modal -->
-        <div id="register-modal"
-            class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 backdrop-blur-sm px-4">
-            <div
-                class="bg-surface w-full max-w-md rounded-2xl p-6 md:p-8 shadow-2xl relative" id="register-modal-inner">
-                <button id="modal-close-btn"
-                    class="absolute top-4 right-4 text-on-surface-variant hover:text-on-surface transition-colors">
+        <!-- Registration Modal - Organization -->
+        <div id="register-org-modal" class="modal-overlay fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 backdrop-blur-sm px-4">
+            <div class="modal-inner bg-surface w-full max-w-md rounded-2xl p-6 md:p-8 shadow-2xl relative">
+                <button class="modal-close-btn absolute top-4 right-4 text-on-surface-variant hover:text-on-surface transition-colors">
                     <span class="material-symbols-outlined">close</span>
                 </button>
 
-                <h3 class="font-h2 text-2xl text-primary mb-2">Đăng ký tham gia</h3>
-                <p class="font-body-sm text-on-surface-variant mb-6">Điền thông tin của bạn để chúng tôi có thể liên hệ
-                    và hỗ trợ tốt nhất.</p>
+                <h3 class="font-h2 text-2xl text-primary mb-2">Đăng ký tài khoản tổ chức</h3>
+                <p class="font-body-sm text-on-surface-variant mb-6">Điền thông tin của bạn để chúng tôi có thể liên hệ và hỗ trợ tốt nhất.</p>
 
-                <form class="flex flex-col gap-4"
-                    onsubmit="event.preventDefault(); alert('Đăng ký thành công! Chúng tôi sẽ liên hệ với bạn sớm nhất.'); document.getElementById('register-modal').classList.remove('flex'); document.getElementById('register-modal').classList.add('hidden');">
+                <form class="flex flex-col gap-4" onsubmit="event.preventDefault(); alert('Đăng ký thành công! Chúng tôi sẽ liên hệ với bạn sớm nhất.'); closeSpecificModal('register-org-modal');">
                     <div>
-                        <label for="register-name" class="block font-label-md text-on-surface mb-2 font-medium">Họ và
-                            tên *</label>
-                        <input type="text" id="register-name" name="name" title="Họ và tên" required
-                            placeholder="Nhập họ và tên"
-                            class="w-full px-4 py-3 rounded-xl border-2 border-primary focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all placeholder:text-slate-400">
+                        <label for="org-register-name" class="block font-label-md text-on-surface mb-2 font-medium">Họ và tên *</label>
+                        <input type="text" id="org-register-name" name="name" title="Họ và tên" required placeholder="Nhập họ và tên" class="w-full px-4 py-3 rounded-xl border-2 border-primary focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all placeholder:text-slate-400">
                     </div>
                     <div>
-                        <label for="register-phone" class="block font-label-md text-on-surface mb-1">Số điện thoại
-                            *</label>
-                        <input type="tel" id="register-phone" name="phone" title="Số điện thoại" required
-                            placeholder="Nhập số điện thoại"
-                            class="w-full px-4 py-2 rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all">
+                        <label for="org-register-phone" class="block font-label-md text-on-surface mb-1">Số điện thoại *</label>
+                        <input type="tel" id="org-register-phone" name="phone" title="Số điện thoại" required placeholder="Nhập số điện thoại" class="w-full px-4 py-2 rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all">
                     </div>
                     <div>
-                        <label for="register-email" class="block font-label-md text-on-surface mb-1">Email</label>
-                        <input type="email" id="register-email" name="email" title="Địa chỉ Email"
-                            placeholder="Nhập email"
-                            class="w-full px-4 py-2 rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all">
+                        <label for="org-register-email" class="block font-label-md text-on-surface mb-1">Email</label>
+                        <input type="email" id="org-register-email" name="email" title="Địa chỉ Email" placeholder="Nhập email" class="w-full px-4 py-2 rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all">
+                    </div>
+
+                    <button type="submit" class="mt-4 w-full py-3 bg-primary text-on-primary font-label-bold rounded-lg hover:bg-primary-container transition-colors shadow-md">
+                        Gửi thông tin
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Registration Modal - Volunteer -->
+        <div id="register-vol-modal" class="modal-overlay fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 backdrop-blur-sm px-4">
+            <div class="modal-inner bg-surface w-full max-w-md rounded-2xl p-6 md:p-8 shadow-2xl relative">
+                <button class="modal-close-btn absolute top-4 right-4 text-on-surface-variant hover:text-on-surface transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+
+                <h3 class="font-h2 text-2xl text-primary mb-2">Đăng kí tài khoản tình nguyện viên</h3>
+                <p class="font-body-sm text-on-surface-variant mb-6">Điền thông tin của bạn để chúng tôi có thể liên hệ và hỗ trợ tốt nhất.</p>
+
+                <form class="flex flex-col gap-4" onsubmit="event.preventDefault(); alert('Đăng ký thành công! Chúng tôi sẽ liên hệ với bạn sớm nhất.'); closeSpecificModal('register-vol-modal');">
+                    <div>
+                        <label for="vol-register-name" class="block font-label-md text-on-surface mb-2 font-medium">Họ và tên *</label>
+                        <input type="text" id="vol-register-name" name="name" title="Họ và tên" required placeholder="Nhập họ và tên" class="w-full px-4 py-3 rounded-xl border-2 border-primary focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all placeholder:text-slate-400">
                     </div>
                     <div>
-                        <label class="block font-label-md text-on-surface mb-1">Bạn muốn đăng ký
-                            làm?</label>
-                        <!-- Hidden native select for form submit -->
-                        <input type="hidden" id="register-role" name="role" value="tnv">
-                        <!-- Custom select UI -->
-                        <div class="custom-select-wrapper" id="custom-role-select">
-                            <button type="button" class="custom-select-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Chọn vai trò đăng ký">
-                                <span class="custom-select-label">Tình nguyện viên</span>
-                                <svg class="custom-select-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="6 9 12 15 18 9"/>
-                                </svg>
-                            </button>
-                            <div class="custom-select-options" role="listbox" aria-label="Vai trò đăng ký">
-                                <div class="custom-select-option selected" data-value="tnv" role="option" aria-selected="true">Tình nguyện viên</div>
-                                <div class="custom-select-option" data-value="to_chuc" role="option" aria-selected="false">Tổ chức / CLB</div>
-                            </div>
-                        </div>
+                        <label for="vol-register-phone" class="block font-label-md text-on-surface mb-1">Số điện thoại *</label>
+                        <input type="tel" id="vol-register-phone" name="phone" title="Số điện thoại" required placeholder="Nhập số điện thoại" class="w-full px-4 py-2 rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all">
                     </div>
-                    <button type="submit"
-                        class="mt-4 w-full py-3 bg-primary text-on-primary font-label-bold rounded-lg hover:bg-primary-container transition-colors shadow-md">
+                    <div>
+                        <label for="vol-register-email" class="block font-label-md text-on-surface mb-1">Email</label>
+                        <input type="email" id="vol-register-email" name="email" title="Địa chỉ Email" placeholder="Nhập email" class="w-full px-4 py-2 rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all">
+                    </div>
+
+                    <button type="submit" class="mt-4 w-full py-3 bg-primary text-on-primary font-label-bold rounded-lg hover:bg-primary-container transition-colors shadow-md">
                         Gửi thông tin
                     </button>
                 </form>
@@ -1720,9 +1719,10 @@
             });
 
             // ─── Modal GSAP open/close ───────────────────────────────────
-            function openModal() {
-                const modal  = document.getElementById('register-modal');
-                const inner  = document.getElementById('register-modal-inner');
+            function openSpecificModal(modalId) {
+                const modal = document.getElementById(modalId);
+                if (!modal) return;
+                const inner = modal.querySelector('.modal-inner');
                 modal.classList.remove('hidden');
                 modal.classList.add('flex');
                 gsap.fromTo(inner,
@@ -1730,27 +1730,48 @@
                     { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: 'power3.out' }
                 );
             }
-            function closeModal() {
-                const modal  = document.getElementById('register-modal');
-                const inner  = document.getElementById('register-modal-inner');
+            
+            function closeSpecificModal(modalId) {
+                const modal = document.getElementById(modalId);
+                if (!modal) return;
+                const inner = modal.querySelector('.modal-inner');
                 gsap.to(inner, {
                     y: 20, opacity: 0, scale: 0.97, duration: 0.35, ease: 'power2.in',
                     onComplete: () => { modal.classList.remove('flex'); modal.classList.add('hidden'); }
                 });
             }
-            // Nút X đóng modal
-            document.getElementById('modal-close-btn').addEventListener('click', closeModal);
-            // Các nút mở modal (inline onclick)
-            document.querySelectorAll('[onclick*="register-modal"]').forEach(btn => {
-                btn.removeAttribute('onclick');
-                btn.addEventListener('click', openModal);
+
+            // Buttons opening modals
+            document.querySelectorAll('.modal-trigger').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const target = this.getAttribute('data-modal-target');
+                    if(target) openSpecificModal(target);
+                });
             });
+
+            // Close buttons (X) inside modals
+            document.querySelectorAll('.modal-close-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const modalId = this.closest('.modal-overlay').id;
+                    closeSpecificModal(modalId);
+                });
+            });
+
             // Close on backdrop click
-            document.getElementById('register-modal').addEventListener('click', function(e) {
-                if (e.target === this) closeModal();
+            document.querySelectorAll('.modal-overlay').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) closeSpecificModal(this.id);
+                });
             });
-            // Close on Escape key
-            document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+            // Close all on Escape key
+            document.addEventListener('keydown', e => { 
+                if (e.key === 'Escape') {
+                    document.querySelectorAll('.modal-overlay.flex').forEach(modal => {
+                        closeSpecificModal(modal.id);
+                    });
+                } 
+            });
 
 
             // ─── Navigation Active State ─────────────────────────────────
